@@ -38,7 +38,7 @@ public static void main(String[] args) throws IOException {
     
     
     
-    while(analisador.getC() != -1){ //enquanto nao ler EOF
+    while(analisador.mapaCaracter(analisador.getC()) != AnalisadorLexico.FimArquivo){ //enquanto nao ler EOF
         imprimeLexemas();
     }
         imprimeLexemas();

@@ -78,52 +78,53 @@ static final int FechaChaves=17;
 static final int Espaco = 18;
 static final int BarraN =19;
 static final int Outro = 20;
+static final int FimArquivo = 21;
 //FimEntradas-----------------------------------------
 //Tabela de Transição
 private int tabelaTransicao[][] = {
-//              L       D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n  Outro
-/*Estado 0 */   {16,	1,	16,	-1,	25,	26,	27,	28,	14,	-1,	31,	20,	24,	19,	29,	30,	17,	18,	-1,     -1,	-1},
-/*Estado 1 */   {-1,	1,	4,	-1,	-1,	-1,	-1,	-1,	-1,	2,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,     -1},
-/*Estado 2 */   {-1,	3,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 3 */   {-1,	3,	9,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 4 */   {-1,	6,	-1,	-1,	5,	7,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 5 */   {-1,	6,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 6 */   {-1,	6,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-//              L       D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n  Outro
-/*Estado 7 */   {-1,	8,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 8 */   {-1,	8,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 9 */   {-1,	11,	-1,	-1,	10,	12,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 10*/   {-1,	11,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 11*/   {-1,	11,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 12*/   {-1,	13,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 13*/   {-1,	13,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 14*/   {14,	14,	14,	14,	14,	14,	14,	14,	15,	14,	14,	14,	14,	14,	14,	14,	14,	14,	14,	14,	14},
-/*Estado 15*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-//              L       D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n  Outro
-/*Estado 16*/   {16,	16,	16,	16,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 17*/   {17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	18,	17,	17,	17},
-/*Estado 18*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 19*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 20*/   {-1,	-1,	-1,	-1,	-1,	21,	-1,	-1,	-1,	-1,	-1,	-1,	23,	22,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 21*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-//              L       D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n  Outro
-/*Estado 22*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 23*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 24*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	32,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 25*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 26*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 27*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-//              L       D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n  Outro
-/*Estado 28*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 29*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 30*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 31*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1},
-/*Estado 32*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1}
+//              L       D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n    Outro     Fim de Arquivo
+/*Estado 0 */   {16,	1,	16,	-1,	25,	26,	27,	28,	14,	-1,	31,	20,	24,	19,	29,	30,	17,	18,	-1,     -1,	-1,         -1},
+/*Estado 1 */   {-1,	1,	4,	-1,	-1,	-1,	-1,	-1,	-1,	2,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,     -1,         -1},
+/*Estado 2 */   {-1,	3,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 3 */   {-1,	3,	9,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 4 */   {-1,	6,	-1,	-1,	5,	7,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 5 */   {-1,	6,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 6 */   {-1,	6,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+//              L       D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n    Outro     Fim de Arquivo
+/*Estado 7 */   {-1,	8,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 8 */   {-1,	8,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 9 */   {-1,	11,	-1,	-1,	10,	12,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 10*/   {-1,	11,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 11*/   {-1,	11,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 12*/   {-1,	13,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 13*/   {-1,	13,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 14*/   {14,	14,	14,	14,	14,	14,	14,	14,	15,	14,	14,	14,	14,	14,	14,	14,	14,	14,	14,	14,	14,         -1},
+/*Estado 15*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+//              L       D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n    Outro     Fim de Arquivo
+/*Estado 16*/   {16,	16,	16,	16,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 17*/   {17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	17,	18,	17,	17,	17,         -1},
+/*Estado 18*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 19*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 20*/   {-1,	-1,	-1,	-1,	-1,	21,	-1,	-1,	-1,	-1,	-1,	-1,	23,	22,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 21*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+//              L       D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n    Outro     Fim de Arquivo
+/*Estado 22*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 23*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 24*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	32,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 25*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 26*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 27*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+//              L       D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n    Outro     Fim de Arquivo
+/*Estado 28*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 29*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 30*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 31*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1},
+/*Estado 32*/   {-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,	-1,         -1}
 };
 //Fim Tabela de Transição
 
 private String getValorLido(){
-    if(c != -1){
+    if(this.mapaCaracter(c) != FimArquivo){
         return ""+(char)c;
     }else{
         return "FIM DO ARQUIVO";
@@ -154,6 +155,9 @@ private void mensagemErro(){
                        "NA LINHA: " + (linha+1) + ", COLUNA: " + (coluna+1));
 }
 
+
+
+
 public int linha = 0;
 public int coluna = 0;
 
@@ -164,6 +168,9 @@ private InputStreamReader caracter;
 private int estado = 0;
 private int c = 999;
 ArrayList<Lexema> lexemas = new ArrayList<Lexema>();
+
+
+
 
 public Lexema[] getArrayLexemas(){
     return lexemas.toArray(new Lexema[lexemas.size()]);
@@ -311,9 +318,9 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                         if(this.mapaCaracter(c) != Espaco       &&
                            this.mapaCaracter(c) != BarraN       &&
                            this.mapaCaracter(c) != AbreChaves   &&
-                           c != -1                              ){
+                           this.mapaCaracter(c) != FimArquivo   ){
                                 lexemas.add(new Lexema(c));
-                        }else if(c != -1){
+                        }else if(this.mapaCaracter(c) != FimArquivo){
                                 while(this.mapaCaracter(c) == Espaco || this.mapaCaracter(c) == BarraN){
                                     switch(this.mapaCaracter(c)){
                                         case Espaco:
@@ -347,7 +354,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                                     }
                                 }
                                 if(this.mapaCaracter(c) != AbreChaves   &&
-                                   c != -1                              ){
+                                   this.mapaCaracter(c) != FimArquivo   ){
                                          lexemas.add(new Lexema(c));
                                 }
                                 
@@ -508,7 +515,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
 // Fim reais / inteiros---------------------------------------------------------------------
 // Strings ---------------------------------------------------------------------------------
                 case 14:
-                    if(c!= -1){
+                    if(this.mapaCaracter(c) != FimArquivo){
                         this.concatenarLexema(numeroLexemas, c);
                         coluna += 1;
                     }else{
@@ -558,7 +565,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                     break;
 // Comentarios--------------------------------------------------------------------------------
                 case 17:
-                    if(c != -1){
+                    if(this.mapaCaracter(c) != FimArquivo){
                         coluna += 1;
                     }else{
                         this.mensagemErro();
@@ -604,7 +611,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                     break;
 //Estados não existentes:
                 default:
-                    System.out.println("Erro --- ESTADO NÃO EXISTENTE!");
+                    System.out.println("Erro --- ESTADO NÃO EXISTENTE!  "+estado);
                     coluna += 1;
                     break;
             }
@@ -615,15 +622,16 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
         if(estado == -1){
             estado = 0;
         }
-        if(c != -1                          &&
-           estado != 0                      ){
+        
+        if(this.mapaCaracter(c) != FimArquivo           &&
+           estado != 0                                  ){
                 c = caracter.read();
         }
         
         
-        if(c == -1                          &&
-           estado == 0                      &&
-           lexemas.get(lexemas.size()-1).getToken() != tokenFim){
+        if(this.mapaCaracter(c) == FimArquivo                   &&
+           estado == 0                                          &&
+           lexemas.get(lexemas.size()-1).getToken() != tokenFim ){
                 
                 lexemas.add(new Lexema("FIM DO ARQUIVO",tokenFim));
                 numeroLexemas += 1;
@@ -631,7 +639,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
         //System.out.print((char)c);
         //System.out.println("[" + (char)c +",  " + estado  + "]");
         
-}   while(c != -1                                               &&
+}   while(this.mapaCaracter(c) != FimArquivo                    &&
           estado != 0                                           );
     
     
@@ -656,22 +664,24 @@ public int mapaTipo(){
 }
 
 public int mapaCaracter(int c){
-    c = (char) c;
-    if(Character.isAlphabetic((char)c)){
-        if((char) c == 'e' || (char) c =='E'){
-            return E;
-        }
-        return L;
-    }
-    else if(Character.isDigit((char)c)){
-        return D;
-    }else switch(c){
+    switch(c){
         case 10: return BarraN;//   \n
         case 9 : return Espaco;//   \t
         case 13: return BarraN;//   \r
         case 32: return Espaco;//   espaço
+        case -1: return FimArquivo;
         
         default: 
+            
+            if(Character.isAlphabetic((char)c)){
+                if((char) c == 'e' || (char) c =='E'){
+                    return E;
+                }
+                return L;
+            }
+            else if(Character.isDigit((char)c)){
+                return D;
+            }
             switch((char) c) {
                 case ' ' : return Espaco;
                 case '_' : return Underline;
@@ -692,6 +702,8 @@ public int mapaCaracter(int c){
                 default  : return Outro;
         }
     }
+    
+    
         
         
     }
