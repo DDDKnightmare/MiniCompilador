@@ -6,7 +6,11 @@
 
 package lexico;
 
-
+/**
+ *
+ * @author Guilherme Flores e Nicole Tannus
+ * 
+ */
 
 public class Lexema {
     private String lexema = "";

@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 package lexico;
-
+/**
+ *
+ * @author Guilherme Flores e Nicole Tannus
+ * 
+ */
 import java.util.*;
 
 
@@ -22,9 +26,9 @@ public class TabelaSimbolos{
         simbolos.put("entao", new Lexema("entao", AnalisadorLexico.tokenEntao, 0));
         simbolos.put("fimse", new Lexema("fimse", AnalisadorLexico.tokenFimSe, 0));
         simbolos.put("fim", new Lexema("fim", AnalisadorLexico.tokenFim, 0));
-        simbolos.put("inteiro", new Lexema("inteiro", AnalisadorLexico.palavraReservada, 0));
-        simbolos.put("real", new Lexema("real", AnalisadorLexico.palavraReservada, 0));
-        simbolos.put("literal", new Lexema("literal", AnalisadorLexico.palavraReservada, 0));
+        simbolos.put("inteiro", new Lexema("inteiro", AnalisadorLexico.palavraReservada, AnalisadorLexico.tipoInteiro));
+        simbolos.put("real", new Lexema("real", AnalisadorLexico.palavraReservada, AnalisadorLexico.tipoReal));
+        simbolos.put("literal", new Lexema("literal", AnalisadorLexico.palavraReservada, AnalisadorLexico.tipoLiteral));
     }
     
     public static Lexema getSimbolo(String key){

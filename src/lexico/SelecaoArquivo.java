@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 package lexico;
-
+/**
+ *
+ * @author Guilherme Flores e Nicole Tannus
+ * 
+ */
 import javax.swing.JFileChooser;
 import javax.swing.JComponent;
 import javax.accessibility.Accessible;
