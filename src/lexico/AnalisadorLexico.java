@@ -357,9 +357,8 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                                 }
                                 
                         }else{
-                            if(this.mapaCaracter(c) == FimArquivo                       &&
-                                estado == 0                                             &&
-                                lexemas.get(lexemas.size()-1).getToken() != tokenFim    ){
+                            if(estado == 0                                             &&
+                               lexemas.get(lexemas.size()-1).getToken() != tokenFim    ){
 
                                      lexemas.add(new Lexema("FIM DO ARQUIVO",tokenFim));
                                      numeroLexemas += 1;
