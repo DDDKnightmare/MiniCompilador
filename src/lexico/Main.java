@@ -41,7 +41,6 @@ public static void main(String[] args) throws IOException {
     while(analisador.mapaCaracter(analisador.getC()) != AnalisadorLexico.FimArquivo){ //enquanto nao ler EOF
         imprimeLexemas();
     }
-        imprimeLexemas();
         
         
         TabelaSimbolos.imprimeHash();
