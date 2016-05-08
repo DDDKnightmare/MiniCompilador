@@ -567,7 +567,28 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
 // Comentarios--------------------------------------------------------------------------------
                 case 17:
                     if(this.mapaCaracter(c) != FimArquivo){
-                        coluna += 1;
+                        switch(this.mapaCaracter(c)){
+                                        case Espaco:
+                                            if((char)c == '\t'){
+                                                coluna += 8;
+                                            }else{                      // ' '
+                                                coluna += 1;
+                                            }
+                                            break;
+
+                                        case BarraN:
+                                            if((char)c == '\n'){
+                                                linha += 1;
+                                                coluna = 0;
+                                            }else{                      // '\r'
+                                                coluna = 0;
+                                            }
+                                            break;
+                                        default:
+                                            coluna += 1;
+                                            
+                                            break;
+                                    }
                     }else{
                         this.mensagemErro();
                     }
