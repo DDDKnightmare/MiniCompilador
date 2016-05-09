@@ -83,7 +83,7 @@ static final int FimArquivo = 21;
 //Tabela de Transição
 private int tabelaTransicao[][] = {
 //              L        D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n    Outro     Fim de Arquivo
-/*Estado 0 */   {16,     1,     16,     -1,     25,     26,     27,     28,     14,     -1,     31,     20,     24,     19,     29,     30,     17,     18,     -1,     -1,     -1,         -1},
+/*Estado 0 */   {16,     1,     16,     -1,     25,     26,     27,     28,     14,     -1,     31,     20,     24,     19,     29,     30,     17,     18,      0,      0,     -1,          0},
 /*Estado 1 */   { 0,     1,      4,      0,      0,      0,      0,      0,      0,      2,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,          0},
 /*Estado 2 */   {-1,     3,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,     -1,         -1},
 /*Estado 3 */   { 0,     3,      9,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,          0},
@@ -178,6 +178,10 @@ public Lexema[] getArrayLexemas(){
 
 public int getNumeroLexemas(){
     return numeroLexemas;
+}
+
+public void setLinha(int linha){
+    this.getLexema().setLinha(linha);
 }
 
 public Lexema getLexema(){
@@ -320,6 +324,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                            this.mapaCaracter(c) != AbreChaves   &&
                            this.mapaCaracter(c) != FimArquivo   ){
                                 lexemas.add(new Lexema(c));
+                                coluna += 1;
                         }else if(this.mapaCaracter(c) != FimArquivo){
                                 while(this.mapaCaracter(c) == Espaco || this.mapaCaracter(c) == BarraN){
                                     switch(this.mapaCaracter(c)){
@@ -343,175 +348,190 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                                                 c = caracter.read();
                                             }
                                             break;
-                                        default:
-                                            this.mensagemErro();
-                                            lexemas.add(new Lexema(c,tokenErro));
-                                            
-                                            break;
                                     }
                                 }
-                                if(this.mapaCaracter(c) != AbreChaves){
-                                         lexemas.add(new Lexema(c));
-                                }else if(this.mapaCaracter(c) == AbreChaves){
+                                if(this.mapaCaracter(c) == AbreChaves){
+                                        coluna += 1; 
+                                }else if(this.mapaCaracter(c) != Outro){
+                                        lexemas.add(new Lexema(c));
+                                        coluna += 1;
+                                }else{
+                                    this.mensagemErro();
+                                    lexemas.add(new Lexema(c,tokenErro,linha));
                                     coluna += 1;
+                                    c = caracter.read();
                                 }
                                 
                         }else{
-                            if(estado == 0                                             &&
-                               lexemas.get(lexemas.size()-1).getToken() != tokenFim    ){
-
+                            if(lexemas.get(lexemas.size()-1).getToken() != tokenFim){
                                      lexemas.add(new Lexema("FIM DO ARQUIVO",tokenFim));
+                                     this.setLinha(linha);
                                      numeroLexemas += 1;
                             }
                         }
-                    
                     break;
 // Reais / Inteiros---------------------------------------------------------------------
                 case 1:
                     switch(this.mapaCaracter(c)){
-                        case D:
+                        case D:     case E:     case Ponto:
                             this.concatenarLexema(numeroLexemas, c);
-                            break;
-                        case E:                     
-                        case Ponto:
-                            this.concatenarLexema(numeroLexemas, c);
+                            coluna += 1;
                             break;
                         default: 
                             this.setToken(numeroLexemas, this.mapaEstado(estado));
                             this.setTipo(numeroLexemas, this.mapaTipo());
+                            this.setLinha(linha);
                             numeroLexemas += 1;
                             break;
                     }
-                    coluna += 1;
+                    
                     break;
                 case 2:
                     if(this.mapaCaracter(c) != D){
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                         this.mensagemErro();
                     }else{
                         this.concatenarLexema(numeroLexemas, c);
+                        coluna += 1;
                     }
-                    coluna += 1;
+                    
                     break;
                 case 3:
                     if(this.mapaCaracter(c) == D || this.mapaCaracter(c) == E){
                         this.concatenarLexema(numeroLexemas, c);
+                        coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
                         this.setTipo(numeroLexemas, this.mapaTipo());
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                     }
-                    coluna += 1;
+                    
                     break;
                 case 4:
                     switch(this.mapaCaracter(c)){
-                        case Soma:
+                        case Soma:      case Subtracao:     case D:
                             this.concatenarLexema(numeroLexemas, c);
-                            break;
-                        case Subtracao:
-                            this.concatenarLexema(numeroLexemas, c);
-                            break;
-                        case D:
-                            this.concatenarLexema(numeroLexemas, c);
+                            coluna += 1;
                             break;
                         default:
                             this.setToken(numeroLexemas, this.mapaEstado(estado));
+                            this.setLinha(linha);
                             numeroLexemas += 1;
                             this.mensagemErro();
                             break;
                     }
-                    coluna += 1;
+                    
                     break;
                 case 5:
                     if(this.mapaCaracter(c) == D){
                         this.concatenarLexema(numeroLexemas, c);
+                        coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                         this.mensagemErro();
                     }
-                    coluna += 1;
+                    
                     break;
                 case 6:
                     if(this.mapaCaracter(c) == D){
                         this.concatenarLexema(numeroLexemas, c);
+                        coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
                         this.setTipo(numeroLexemas, this.mapaTipo());
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                     }
-                    coluna += 1;
+                    
                     break;
                 case 7:
                     if(this.mapaCaracter(c) == D){
                         this.concatenarLexema(numeroLexemas, c);
+                        coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                         this.mensagemErro();
                     }
-                    coluna += 1;
+                    
                     break;
                 case 8:
                     if(this.mapaCaracter(c) == D){
                         this.concatenarLexema(numeroLexemas, c);
+                        coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                     }
-                    coluna += 1;
+                    
                     break;
                 case 9:
                     if(this.mapaCaracter(c) == D        || 
                        this.mapaCaracter(c) == Soma     || 
                        this.mapaCaracter(c) == Subtracao){
                             this.concatenarLexema(numeroLexemas, c);
+                            coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                         this.mensagemErro();
                     }
-                    coluna += 1;
+                    
                     break;
                 case 10:
                     if(this.mapaCaracter(c) == D){
                         this.concatenarLexema(numeroLexemas, c);
+                        coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                         this.mensagemErro();
                     }
-                    coluna += 1;
+                    
                     break;
                 case 11:
                     if(this.mapaCaracter(c) == D){
                         this.concatenarLexema(numeroLexemas, c);
+                        coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                     }
-                    coluna += 1;
+                    
                     break;
                 case 12:
                     if(this.mapaCaracter(c) == D){
                         this.concatenarLexema(numeroLexemas, c);
+                        coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                         this.mensagemErro();
                     }
-                    coluna += 1;
+                    
                     break;
                 case 13:
                     if(this.mapaCaracter(c) == D){
                         this.concatenarLexema(numeroLexemas, c);
+                        coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
                         this.setTipo(numeroLexemas, this.mapaTipo());
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                     }
-                    coluna += 1;
+                    
                     break;
 // Fim reais / inteiros---------------------------------------------------------------------
 // Strings ---------------------------------------------------------------------------------
@@ -521,13 +541,16 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                         coluna += 1;
                     }else{
                         this.mensagemErro();
+                        this.setToken(numeroLexemas, tokenErro);
+                        this.setLinha(linha);
+                        numeroLexemas += 1;
                     }
                     break;
                 case 15:
                     this.setToken(numeroLexemas, this.mapaEstado(estado));
                     this.setTipo(numeroLexemas, this.mapaTipo());
+                    this.setLinha(linha);
                     numeroLexemas += 1;
-                    coluna += 1;
                     break;
 // Fim Strings-----------------------------------------------------------------------------
 // ID--------------------------------------------------------------------------------------
@@ -538,6 +561,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                        this.mapaCaracter(c) == Underline){
 
                             this.concatenarLexema(numeroLexemas, c);
+                            coluna += 1;
                     }else{
                        
                         if(!hasSimbolo(this.getLexema())){
@@ -559,10 +583,11 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                                 
                             }
                         }
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                     }
                         
-                    coluna += 1;
+                    
                     break;
 // Comentarios--------------------------------------------------------------------------------
                 case 17:
@@ -606,20 +631,24 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                        this.mapaCaracter(c) == Maior            ){
 
                             this.concatenarLexema(numeroLexemas, c);
+                            coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                     }
-                    coluna += 1;
+                    
                     break;
                 case 24:
                     if(this.mapaCaracter(c) == Igual){
                         this.concatenarLexema(numeroLexemas, c);
+                        coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setLinha(linha);
                         numeroLexemas += 1;
                     }
-                    coluna += 1;
+                    
                     break;
 // Fim Operadores Relacionais
 
@@ -628,13 +657,13 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                 case 25:    case 26:    case 27:    case 28:    
                 case 29:    case 30:    case 31:    case 32:
                     this.setToken(numeroLexemas, this.mapaEstado(estado));
+                    this.setLinha(linha);
                     numeroLexemas += 1;
-                    coluna += 1;
                     break;
 //Estados não existentes:
                 default:
-                    System.out.println("Erro --- ESTADO NÃO EXISTENTE!  "+estado);
-                    coluna += 1;
+                    System.out.println("Erro --- ESTADO NÃO EXISTENTE!" + "\n" +
+                            "Estado: " + estado);
                     break;
             }
         
@@ -656,6 +685,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
            lexemas.get(lexemas.size()-1).getToken() != tokenFim ){
                 
                 lexemas.add(new Lexema("FIM DO ARQUIVO",tokenFim));
+                this.setLinha(linha);
                 numeroLexemas += 1;
         }
         //System.out.print((char)c);

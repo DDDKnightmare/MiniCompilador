@@ -16,6 +16,7 @@ public class Lexema {
     private String lexema = "";
     private int token;
     private int tipo = 0;
+    private int linha = 0;
     
     public void setTipo(int tipo){
         this.tipo = tipo;
@@ -44,6 +45,14 @@ public class Lexema {
     
     public void concatenarLexema(char lexema){
         this.lexema = this.lexema + lexema;
+    }
+    
+    public int getLinha(){
+        return linha;
+    }
+    
+    public void setLinha(int linha){
+        this.linha = linha;
     }
     
     public void setLexema(String lexema){
@@ -125,4 +134,9 @@ public class Lexema {
         this.token = token;
     }
     
+    public Lexema(int lexema, int token, int linha){
+        this.lexema = this.lexema + (char) lexema;
+        this.token = token;
+        this.linha = linha;
+    }
 }
