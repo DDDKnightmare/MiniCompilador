@@ -649,7 +649,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                     }
                         break;
                     
-                case 18:
+                case 18:                                                        //comentarios sao ignorados
                     coluna += 1;
                     break;
 // Fim Comentarios----------------------------------------------------------------------------
@@ -663,7 +663,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                             this.concatenarLexema(numeroLexemas, c);
                             coluna += 1;
                     }else{
-                        this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setToken(numeroLexemas, this.mapaEstado(estado));  //this.mapaEstado(20) = tokenMenor
                         this.setLinha(linha);
                         numeroLexemas += 1;
                     }
@@ -674,7 +674,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                         this.concatenarLexema(numeroLexemas, c);
                         coluna += 1;
                     }else{
-                        this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setToken(numeroLexemas, this.mapaEstado(estado));  //this.mapaEstado(24) = tokenMaior
                         this.setLinha(linha);
                         numeroLexemas += 1;
                     }
