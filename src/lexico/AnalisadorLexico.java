@@ -81,6 +81,7 @@ static final int Outro = 20;
 static final int FimArquivo = 21;
 //FimEntradas-----------------------------------------
 //Tabela de Transição
+//Observação: eventuais erros em estados finais sao tratados no estado 0
 private int tabelaTransicao[][] = {
 //              L        D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n    Outro     Fim de Arquivo
 /*Estado 0 */   {16,     1,     16,     -1,     25,     26,     27,     28,     14,     -1,     31,     20,     24,     19,     29,     30,     17,     18,      0,      0,     -1,          0},
@@ -131,9 +132,9 @@ private String getValorLido(){
     }
 }
 
-private String getEntradaEsperada(int estado){
+private String getEntradaEsperada(int estado){ //para o relatorio de erro 
     switch(estado){
-        case 0:     return "LETRA, DIGITO, +. -, *, /, \",;, <, >, =, (, ), {, }, FIM DE ARQUIVO";
+        case 0:     return "LETRA, DIGITO, +. -, *, /, \",;, <, >, =, (, ), {, FIM DE ARQUIVO";
         case 2:     case 5:     case 7:     case 10:    
         case 12:    
             return "DIGITO";
@@ -317,15 +318,16 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
     do{
 //cast para char realizado nas funções 
         switch (estado){
-                case 0:
+                case 0:// Obs: lexemas só são criados no estado zero;
 // Começando a percorrer o Automato----------------------------------------------------
                         if(this.mapaCaracter(c) != Espaco       &&
                            this.mapaCaracter(c) != BarraN       &&
                            this.mapaCaracter(c) != AbreChaves   &&
-                           this.mapaCaracter(c) != FimArquivo   ){
+                           this.mapaCaracter(c) != FimArquivo   &&
+                           this.mapaCaracter(c) != Outro){//Tratando caracateres diferentes de " ", /n, {, EOF, outros
                                 lexemas.add(new Lexema(c));
                                 coluna += 1;
-                        }else if(this.mapaCaracter(c) != FimArquivo){
+                        }else if(this.mapaCaracter(c) != FimArquivo){ //Tratando " ", /n, {, outros
                                 while(this.mapaCaracter(c) == Espaco || this.mapaCaracter(c) == BarraN){
                                     switch(this.mapaCaracter(c)){
                                         case Espaco:
@@ -360,7 +362,8 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                                     this.mensagemErro();
                                     lexemas.add(new Lexema(c,tokenErro,linha));
                                     coluna += 1;
-                                    c = caracter.read();
+                                    numeroLexemas += 1;
+                                   
                                 }
                                 
                         }else{
@@ -673,6 +676,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
         
         if(estado == -1){
             estado = 0;
+            c = caracter.read();
         }
         
         if(this.mapaCaracter(c) != FimArquivo           &&
