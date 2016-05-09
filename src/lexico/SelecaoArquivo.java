@@ -20,7 +20,7 @@ import java.io.*;
  */
 public class SelecaoArquivo extends JComponent implements Accessible {
     public JFileChooser escolheArquivo;
-    final FileNameExtensionFilter formatoArquivo = new FileNameExtensionFilter("Arquivos .ALG","ALG");
+    final FileNameExtensionFilter formatoArquivo = new FileNameExtensionFilter("Arquivos .ALG","ALG");// filtro para arquivos ALG
     
     public SelecaoArquivo(){
         escolheArquivo = new JFileChooser();
@@ -29,9 +29,10 @@ public class SelecaoArquivo extends JComponent implements Accessible {
     
     public File retornaArquivo(){
         int returnVal = escolheArquivo.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION){
+        if(returnVal == JFileChooser.APPROVE_OPTION){//botao "open" foi clicado
             return escolheArquivo.getSelectedFile();
-        }else return null;
+        }else System.exit(0);
+         return null;// botao cancel foi clicado, para a execucao
     }
 
 }
