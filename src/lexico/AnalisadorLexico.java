@@ -518,7 +518,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                         this.concatenarLexema(numeroLexemas, c);
                         coluna += 1;
                     }else{
-                        this.setToken(numeroLexemas, this.mapaEstado(estado));
+                        this.setToken(numeroLexemas, this.mapaEstado(estado));  //this.mapaEstado(12) = tokenErro
                         this.setLinha(linha);
                         numeroLexemas += 1;
                         this.mensagemErro();
@@ -530,8 +530,8 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                         this.concatenarLexema(numeroLexemas, c);
                         coluna += 1;
                     }else{
-                        this.setToken(numeroLexemas, this.mapaEstado(estado));
-                        this.setTipo(numeroLexemas, this.mapaTipo());
+                        this.setToken(numeroLexemas, this.mapaEstado(estado));  //this.mapaEstado(13) = tokenNumero
+                        this.setTipo(numeroLexemas, this.mapaTipo());           // this.mapaTipo(6) = tipoReal
                         this.setLinha(linha);
                         numeroLexemas += 1;
                     }
@@ -540,19 +540,40 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
 // Fim reais / inteiros---------------------------------------------------------------------
 // Strings ---------------------------------------------------------------------------------
                 case 14:
-                    if(this.mapaCaracter(c) != FimArquivo){
+                    if(this.mapaCaracter(c) != FimArquivo){                     //leitura de "qq", exceto EOF
+                        switch(this.mapaCaracter(c)){
+                                        case Espaco:
+                                            if((char)c == '\t'){
+                                                coluna += 8;
+                                            }else{                      // ' '
+                                                coluna += 1;
+                                            }
+                                            break;
+
+                                        case BarraN:
+                                            if((char)c == '\n'){
+                                                linha += 1;
+                                                coluna = 0;
+                                            }else{                      // '\r'
+                                                coluna = 0;
+                                            }
+                                            break;
+                                        default:
+                                            coluna += 1;
+                                            
+                                            break;
+                                    }
                         this.concatenarLexema(numeroLexemas, c);
-                        coluna += 1;
                     }else{
-                        this.mensagemErro();
                         this.setToken(numeroLexemas, tokenErro);
                         this.setLinha(linha);
                         numeroLexemas += 1;
+                        this.mensagemErro();
                     }
                     break;
                 case 15:
-                    this.setToken(numeroLexemas, this.mapaEstado(estado));
-                    this.setTipo(numeroLexemas, this.mapaTipo());
+                    this.setToken(numeroLexemas, this.mapaEstado(estado));      //this.mapaEstado(15) = tokenLiteral
+                    this.setTipo(numeroLexemas, this.mapaTipo());               // this.mapaTipo(15) = tipoLiteral
                     this.setLinha(linha);
                     numeroLexemas += 1;
                     break;
@@ -568,19 +589,20 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                             coluna += 1;
                     }else{
                        
-                        if(!hasSimbolo(this.getLexema())){
+                        if(!hasSimbolo(this.getLexema())){                      //se o ID não existe
                             
-                            this.getLexema().setToken(this.mapaEstado(estado));
+                            this.getLexema().setToken(this.mapaEstado(estado)); //this.mapaEstado(16) = tokenId ou palavra reservada
                             this.addSimbolo(this.getLexema());
                             
-                        }else{
+                        }else{                                                  //se o ID existe
                             
-                            if(this.getLexema().getTipo() != this.getSimbolo(this.getLexema()).getTipo()          &&
-                               this.getLexema().getTipo() != 0 && this.getSimbolo(this.getLexema()).getTipo() == 0){
+                            if(this.getLexema().getTipo() != this.getSimbolo(this.getLexema()).getTipo()          &&    // tipo lido != tipo na tabela
+                               this.getLexema().getTipo() != 0 && this.getSimbolo(this.getLexema()).getTipo() == 0){    //o lexema lido tem que ter um tipo
+                                                                                                                        //o simbolo da tabela é 0(nao definido)
                                     
-                                    this.alteraSimbolo(this.getLexema());
+                                    this.alteraSimbolo(this.getLexema());       //atualiza o tipo do id                                         
                                     
-                            }else{
+                            }else{              //trata o id como uma ocorrencia ja registrada                                
                                 
                                 this.getLexema().setTipo(this.getSimbolo(this.getLexema()).getTipo());
                                 this.getLexema().setToken(this.getSimbolo(this.getLexema()).getToken());
@@ -618,7 +640,11 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                                             
                                             break;
                                     }
+                        this.concatenarLexema(numeroLexemas, c);
                     }else{
+                        this.setToken(numeroLexemas, tokenErro);
+                        this.setLinha(linha);
+                        numeroLexemas += 1;
                         this.mensagemErro();
                     }
                         break;
