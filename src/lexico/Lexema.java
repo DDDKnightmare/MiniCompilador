@@ -43,7 +43,7 @@ public class Lexema {
         this.lexema = this.lexema + (char)lexema;
     }
     
-    public void concatenarLexema(char lexema){// concatena valor inicial(espaco) com o char recebido
+    public void concatenarLexema(char lexema){// concatena valor inicial(String vazia) com o char recebido
         this.lexema = this.lexema + lexema;
     }
     
