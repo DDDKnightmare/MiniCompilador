@@ -133,7 +133,7 @@ private String getValorLido(){
 
 private String getEntradaEsperada(int estado){
     switch(estado){
-        case 0:     return "LETRA, DIGITO, +. -, *, /, \",;, <, >, =, (, ), {, }";
+        case 0:     return "LETRA, DIGITO, +. -, *, /, \",;, <, >, =, (, ), {, }, FIM DE ARQUIVO";
         case 2:     case 5:     case 7:     case 10:    
         case 12:    
             return "DIGITO";
@@ -352,9 +352,10 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                                 }
                                 if(this.mapaCaracter(c) == AbreChaves){
                                         coluna += 1; 
-                                }else if(this.mapaCaracter(c) != Outro){
-                                        lexemas.add(new Lexema(c));
-                                        coluna += 1;
+                                }else if(this.mapaCaracter(c) != Outro      &&
+                                         this.mapaCaracter(c) != FechaChaves){
+                                                lexemas.add(new Lexema(c));
+                                                coluna += 1;
                                 }else{
                                     this.mensagemErro();
                                     lexemas.add(new Lexema(c,tokenErro,linha));
