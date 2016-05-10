@@ -720,10 +720,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
         }
         //System.out.print((char)c);
         //System.out.println("[" + (char)c +",  " + estado  + "]");
-        if(this.mapaCaracter(c) != FimArquivo       &&
-           estado == 0                              ){
-            break;
-        }
+        
 }   while(estado != 0);
     
     
