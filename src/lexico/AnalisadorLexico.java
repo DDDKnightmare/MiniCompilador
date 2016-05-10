@@ -699,12 +699,12 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
         
         estado = tabelaTransicao[estado][this.mapaCaracter(c)];
         
-        if(estado == -1){
+        if(estado == -1){    // continur execucao mesmo apos um erro
             estado = 0;
             c = caracter.read();
         }
         
-        if(this.mapaCaracter(c) != FimArquivo           &&
+        if(this.mapaCaracter(c) != FimArquivo           &&  //continuar e garantir a leitura de todo o automato 
            estado != 0                                  ){
                 c = caracter.read();
         }
@@ -720,10 +720,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
         }
         //System.out.print((char)c);
         //System.out.println("[" + (char)c +",  " + estado  + "]");
-        if(this.mapaCaracter(c) != FimArquivo       &&
-           estado == 0                              ){
-            break;
-        }
+       
 }   while(estado != 0);
     
     
