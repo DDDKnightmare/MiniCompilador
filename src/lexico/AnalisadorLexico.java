@@ -640,7 +640,6 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                                             
                                             break;
                                     }
-                        this.concatenarLexema(numeroLexemas, c);
                     }else{
                         this.setToken(numeroLexemas, tokenErro);
                         this.setLinha(linha);
