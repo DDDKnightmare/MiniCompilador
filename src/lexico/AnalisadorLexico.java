@@ -324,6 +324,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                            this.mapaCaracter(c) != BarraN       &&
                            this.mapaCaracter(c) != AbreChaves   &&
                            this.mapaCaracter(c) != FimArquivo   &&
+                           this.mapaCaracter(c) != FechaChaves  &&
                            this.mapaCaracter(c) != Outro){//Tratando caracateres diferentes de " ", /n, {, EOF, outros
                                 lexemas.add(new Lexema(c));
                                 coluna += 1;
@@ -641,9 +642,9 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                                             break;
                                     }
                     }else{
-                        this.setToken(numeroLexemas, tokenErro);
-                        this.setLinha(linha);
-                        numeroLexemas += 1;
+ //                      this.setToken(numeroLexemas, tokenErro);
+ //                       this.setLinha(linha);
+ //                       numeroLexemas += 1;
                         this.mensagemErro();
                     }
                         break;
@@ -720,10 +721,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
         }
         //System.out.print((char)c);
         //System.out.println("[" + (char)c +",  " + estado  + "]");
-        if(this.mapaCaracter(c) != FimArquivo       &&
-           estado == 0                              ){
-            break;
-        }
+        
 }   while(estado != 0);
     
     
