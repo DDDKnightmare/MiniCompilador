@@ -163,6 +163,8 @@ public int linha = 0;
 public int coluna = 0;
 
 
+private int ultimoEstado = 999;
+
 private int numeroLexemas = 0;
 private FileInputStream fonteAlg;
 private InputStreamReader caracter;
@@ -697,11 +699,17 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                     break;
             }
         
+        ultimoEstado = estado;
         
         estado = tabelaTransicao[estado][this.mapaCaracter(c)];
         
         if(estado == -1){
             estado = 0;
+            
+            switch(ultimoEstado){   //passar tratamentos de erros para dentro dessa função;
+                
+            }
+            
             c = caracter.read();
         }
         
@@ -722,7 +730,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
         //System.out.print((char)c);
         //System.out.println("[" + (char)c +",  " + estado  + "]");
         
-}   while(estado != 0);
+}   while(estado != 0   &&  ultimoEstado != 18);
     
     
     //System.out.println("\n");
