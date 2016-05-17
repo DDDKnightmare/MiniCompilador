@@ -90,17 +90,19 @@ public class Lexema {
 //FIM OPR------------------------------------------------------------------------
             
 //ID E PALAVRAS RESERVADAS-------------------------------------------------------
-            case AnalisadorLexico.tokenId:                  return "ID";
-            case AnalisadorLexico.tokenEntao:               return "ENTAO";
-            case AnalisadorLexico.tokenEscreva:             return "ESCREVA";
-            case AnalisadorLexico.tokenFim:                 return "FIM DO ARQUIVO";
-            case AnalisadorLexico.tokenFimSe:               return "FIMSE";
-            case AnalisadorLexico.tokenLeia:                return "LEIA";
-            case AnalisadorLexico.tokenInicio:              return "INICIO";
-            case AnalisadorLexico.tokenVarInicio:           return "VARINICIO";
-            case AnalisadorLexico.tokenVarFim:              return "VARFIM";
-            case AnalisadorLexico.tokenSe:                  return "SE";
-            case AnalisadorLexico.palavraReservada:         return "PALAVRA RESERVADA";
+            case AnalisadorLexico.tokenId:                          return "ID";
+            case AnalisadorLexico.tokenEntao:                       return "ENTAO";
+            case AnalisadorLexico.tokenEscreva:                     return "ESCREVA";
+            case AnalisadorLexico.tokenFim:                         return "FIM DO ARQUIVO";
+            case AnalisadorLexico.tokenFimSe:                       return "FIMSE";
+            case AnalisadorLexico.tokenLeia:                        return "LEIA";
+            case AnalisadorLexico.tokenInicio:                      return "INICIO";
+            case AnalisadorLexico.tokenVarInicio:                   return "VARINICIO";
+            case AnalisadorLexico.tokenVarFim:                      return "VARFIM";
+            case AnalisadorLexico.tokenSe:                          return "SE";
+            case AnalisadorLexico.palavraReservadaInteiro:          return "PALAVRA RESERVADA(INTEIRO)";
+            case AnalisadorLexico.palavraReservadaReal:             return "PALAVRA RESERVADA(REAL)";
+            case AnalisadorLexico.palavraReservadaLiteral:          return "PALAVRA RESERVADA(LITERAL)";
 //FIM ID E PALAVRAS RESRVADAS----------------------------------------------------
             default: return "ERRO";
         }
