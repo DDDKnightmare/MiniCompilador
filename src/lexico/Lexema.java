@@ -28,10 +28,12 @@ public class Lexema {
     
     public String getStringTipo(){
         switch(tipo){
-            case AnalisadorLexico.tipoInteiro     : return "INTEIRO";
-            case AnalisadorLexico.tipoLiteral     : return "LITERAL";
-            case AnalisadorLexico.tipoReal        : return "REAL";
-            case AnalisadorLexico.palavraReservada: return "PALAVRA RESERVADA";
+            case AnalisadorLexico.tipoInteiro                   : return "INTEIRO";
+            case AnalisadorLexico.tipoLiteral                   : return "LITERAL";
+            case AnalisadorLexico.tipoReal                      : return "REAL";
+            case AnalisadorLexico.palavraReservadaInteiro       : return "PALAVRA RESERVADA(INTEIRO)";
+            case AnalisadorLexico.palavraReservadaReal          : return "PALAVRA RESERVADA(REAL)";
+            case AnalisadorLexico.palavraReservadaLiteral       : return "PALAVRA RESERVADA(LITERAL)";
             default: return "";
         }
     }

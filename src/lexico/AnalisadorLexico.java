@@ -52,7 +52,9 @@ public static final int tokenMaiorIgual = 28;
 public static final int tipoInteiro = 50;
 public static final int tipoReal = 51;
 public static final int tipoLiteral = 52;
-public static final int palavraReservada = 53;
+public static final int palavraReservadaInteiro = 53;
+public static final int palavraReservadaReal = 54;
+public static final int palavraReservadaLiteral = 55;
 //FimTipos
 //public static final int tokenComentario = 500;
 //FimTokens-------------------------------------------
@@ -262,11 +264,11 @@ public int mapaEstado(int estado){
                     case "fim":
                         return tokenFim;
                     case "literal":
-                        return palavraReservada;
+                        return palavraReservadaLiteral;
                     case "inteiro":
-                        return palavraReservada;
+                        return palavraReservadaInteiro;
                     case "real":
-                        return palavraReservada;
+                        return palavraReservadaReal;
                     default:
                         return tokenId;
                 }
