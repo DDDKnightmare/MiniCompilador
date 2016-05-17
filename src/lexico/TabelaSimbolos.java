@@ -26,9 +26,9 @@ public class TabelaSimbolos{
         simbolos.put("entao", new Lexema("entao", AnalisadorLexico.tokenEntao, 0));
         simbolos.put("fimse", new Lexema("fimse", AnalisadorLexico.tokenFimSe, 0));
         simbolos.put("fim", new Lexema("fim", AnalisadorLexico.tokenFim, 0));
-        simbolos.put("inteiro", new Lexema("inteiro", AnalisadorLexico.palavraReservada, 0/*AnalisadorLexico.tipoInteiro*/));
-        simbolos.put("real", new Lexema("real", AnalisadorLexico.palavraReservada, 0/*AnalisadorLexico.tipoReal*/));
-        simbolos.put("literal", new Lexema("literal", AnalisadorLexico.palavraReservada, 0/*AnalisadorLexico.tipoLiteral*/));
+        simbolos.put("inteiro", new Lexema("inteiro", AnalisadorLexico.palavraReservadaInteiro, 0/*AnalisadorLexico.tipoInteiro*/));
+        simbolos.put("real", new Lexema("real", AnalisadorLexico.palavraReservadaReal, 0/*AnalisadorLexico.tipoReal*/));
+        simbolos.put("literal", new Lexema("literal", AnalisadorLexico.palavraReservadaLiteral, 0/*AnalisadorLexico.tipoLiteral*/));
     }
     
     public static Lexema getSimbolo(String key){
