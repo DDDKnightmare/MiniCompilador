@@ -1,6 +1,6 @@
 
 package sintatico;
-import lexico.Main;
+import lexico.*;
 /**
  *
  * @author guilhermeferreira
