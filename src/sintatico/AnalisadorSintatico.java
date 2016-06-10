@@ -131,10 +131,74 @@ public class AnalisadorSintatico {
     public int estado = 0;
     public int error = 0;
     
-    public int mapeiaToken(int token){
-        if(token == AnalisadorLexico.tokenNumero)
-    
-    
+    public int mapeiaToken(int token){//Mapeia token de acordo com a coluna da tabela
+        if(token == AnalisadorLexico.tokenInicio){
+            return 0;
+        }
+        else if(token == AnalisadorLexico.tokenVarInicio){
+            return 1;
+        }
+        else if(token == AnalisadorLexico.tokenVarFim){
+            return 2;
+        }
+        else if(token == AnalisadorLexico.tokenId){
+            return 3;
+        }
+        /*else if(token == AnalisadorLexico.tokenInt){
+            return 4;
+        }
+        else if(token == AnalisadorLexico.tokenReal){
+            return 5;
+        }
+        else if(token == AnalisadorLexico.tokenLit){
+            return 6;
+        }*/
+        else if(token == AnalisadorLexico.tokenLiteral){
+            return 7;
+        }
+        else if(token == AnalisadorLexico.tokenLeia){
+            return 8;
+        }
+        else if(token == AnalisadorLexico.tokenEscreva){
+            return 9;
+        }
+        else if(token == AnalisadorLexico.tokenPontoVirgula){
+            return 10;
+        }
+        else if(token == AnalisadorLexico.tokenAbreParenteses){
+            return 11;
+        }
+        else if(token == AnalisadorLexico.tokenFechaParenteses){
+            return 12;
+        }
+        else if(token == AnalisadorLexico.tokenNumero){
+            return 13;
+        }
+        else if(token == AnalisadorLexico.tokenDeclaracao){
+            return 14;
+        }
+        else if(token == AnalisadorLexico.tokenMais || token == AnalisadorLexico.tokenMenos 
+                || token == AnalisadorLexico.tokenMultiplicacao || token == AnalisadorLexico.tokenDivisao ){
+            return 15;
+        }
+        else if(token == AnalisadorLexico.tokenMenor || token == AnalisadorLexico.tokenMenorIgual 
+                || token == AnalisadorLexico.tokenDiferente || token == AnalisadorLexico.tokenMaior 
+                || token == AnalisadorLexico.tokenMaiorIgual || token == AnalisadorLexico.tokenIgual ){
+            return 16;
+        }
+        else if(token == AnalisadorLexico.tokenSe){
+            return 17;
+        }
+        else if(token == AnalisadorLexico.tokenEntao){
+            return 18;
+        }
+        else if(token == AnalisadorLexico.tokenFim){
+            return 19;
+        }
+        else if(token == AnalisadorLexico.tokenFimSe){
+            return 20;
+        }
+        else return -1;
     }
     
     public void analisadorSintatico() throws IOException{
@@ -146,15 +210,15 @@ public class AnalisadorSintatico {
         switch(acao){
             case s:
                 pilha.push(token);
-                estado = tabelaSintatica[estado][token.getToken()][1];
-                pilha.push(tabelaSintatica[estado][token.getToken()][1]);
+                estado = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
+                pilha.push(tabelaSintatica[estado][mapeiaToken(token.getToken())][1]);
 
                 token = Main.obterLexemas();
                 break;
 
             case r:
-                System.out.println(gramatica[tabelaSintatica[estado][token.getToken()][1]].getProducao());
-                for(int i = 0; i < gramatica[tabelaSintatica[estado][token.getToken()][1]].tamanhoProducao() * 2; i++){
+                System.out.println(gramatica[tabelaSintatica[estado][mapeiaToken(token.getToken())][1]].getProducao());
+                for(int i = 0; i < gramatica[tabelaSintatica[estado][mapeiaToken(token.getToken())][1]].getTamanho() * 2; i++){
                     pilha.pop();
                 }
 

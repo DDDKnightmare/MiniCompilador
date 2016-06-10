@@ -26,7 +26,9 @@ public class Producao {
 //    public void setCodigoProducao(int codigoProducao){
 //        this.codigoProducao = codigoProducao;
 //    }
-    
+    public int getTamanho(){
+        return tamanho;
+    }
     public Producao(){
         
     }
