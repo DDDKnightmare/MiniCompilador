@@ -9,6 +9,7 @@ public class Producao {
     
     private String producao;
     private int codigoProducao;
+    private int tamanho;
     
     public String getProducao(){
         return producao;
@@ -33,6 +34,11 @@ public class Producao {
     public Producao(String producao, int codigoProducao){
         this.producao = producao;
         this.codigoProducao = codigoProducao;
+    }
+    public Producao(String producao, int codigoProducao, int tamanho){
+        this.producao = producao;
+        this.codigoProducao = codigoProducao;
+        this.tamanho = tamanho;
     }
     
     public Producao(String producao){

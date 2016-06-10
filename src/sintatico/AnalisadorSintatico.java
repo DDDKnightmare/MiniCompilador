@@ -11,36 +11,36 @@ import java.util.Stack;
 public class AnalisadorSintatico {
     Producao[] gramatica = 
     {
-        new Producao("P\' -> P ",0),
-        new Producao("P -> inicio V A",1),
-        new Producao("V -> varinicio LV",2),
-        new Producao("LV -> D LV",3),
-        new Producao("LV -> varfim;",4),
-        new Producao("D -> id TIPO;",5),
-        new Producao("TIPO -> int",6),
-        new Producao("TIPO -> real",7),
-        new Producao("TIPO -> lit",8),
-        new Producao("A -> ES A",9),
-        new Producao("ES -> leia id;",10),
-        new Producao("ES -> escreva ARG;",11),
-        new Producao("ARG -> literal",12),
-        new Producao("ARG -> num",13),
-        new Producao("ARG -> id",14),
-        new Producao("A -> CMD A",15),
-        new Producao("CMD -> id rcb LD",16),
-        new Producao("LD -> OPRM opm OPRD",17),
-        new Producao("LD -> OPRD",18),
-        new Producao("OPRD -> id",19),
-        new Producao("OPRD -> num",20),
-        new Producao("A -> COND A",21),
-        new Producao("COND -> CABECALHO CORPO",22),
-        new Producao("CABECALHO -> se (EXP_R) entao",23),
-        new Producao("EXP_R -> OPRD opr OPRD",24),
-        new Producao("CORPO -> ES CORPO",25),
-        new Producao("CORPO -> CMD CORPO",26),
-        new Producao("CORPO -> COND CORPO",27),
-        new Producao("CORPO -> fimse",28),
-        new Producao("A -> fim",29),
+        new Producao("P\' -> P ",1,1),
+        new Producao("P -> inicio V A",2,3),
+        new Producao("V -> varinicio LV",3,2),
+        new Producao("LV -> D LV",4,2),
+        new Producao("LV -> varfim;",5,2),
+        new Producao("D -> id TIPO;",6,2),
+        new Producao("TIPO -> int",7,1),
+        new Producao("TIPO -> real",8,1),
+        new Producao("TIPO -> lit",9,1),
+        new Producao("A -> ES A",10,2),
+        new Producao("ES -> leia id;",11,3),
+        new Producao("ES -> escreva ARG;",12,3),
+        new Producao("ARG -> literal",13,1),
+        new Producao("ARG -> num",14,1),
+        new Producao("ARG -> id",15,1),
+        new Producao("A -> CMD A",16,2),
+        new Producao("CMD -> id rcb LD;",17,4),
+        new Producao("LD -> OPRM opm OPRD",18,3),
+        new Producao("LD -> OPRD",19,1),
+        new Producao("OPRD -> id",20,1),
+        new Producao("OPRD -> num",21,1),
+        new Producao("A -> COND A",22,2),
+        new Producao("COND -> CABECALHO CORPO",23,2),
+        new Producao("CABECALHO -> se (EXP_R) entao",24,5),
+        new Producao("EXP_R -> OPRD opr OPRD",25,3),
+        new Producao("CORPO -> ES CORPO",26,2),
+        new Producao("CORPO -> CMD CORPO",27,2),
+        new Producao("CORPO -> COND CORPO",28,2),
+        new Producao("CORPO -> fimse",29,1),
+        new Producao("A -> fim",30,1),
         new Producao("opm -> OPM(+)",30),
         new Producao("opm -> OPM(-)",31),
         new Producao("opm -> OPM(*)",32),
@@ -54,12 +54,14 @@ public class AnalisadorSintatico {
         new Producao("opr -> OPR(>)",40),
         new Producao("opr -> OPR(>=)",41)
     };
-    public static int s = 0;
-    public static int t = 1;
-    public static int r = 2;
-    public static int erro = -1;
-    public static int acc = 15;
+    public static final int s = 0;
+    public static final int t = 1;
+    public static final int r = 2;
+    public static final int erro = -1;
+    public static final int acc = 15;
+    
     public int[][][] tabelaSintatica = {
+//    inicio	varinicio	varfim	          id	          int	         real	           lit	          leia	          escreva	    ;	           (	            )	            num	           rcb	           opm	           oPr	           se	          entao	          fim	         fimse	            $	           P	   V	           A	LV	D	TIPO	ES	ARG	CMD	LD	OPRD	COND	CABECALHO	CORPO	EXP_R
     {{s,2},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{t,1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1}},
     {{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{acc,0},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1}},
     {{erro,-1},	{s,4},          {erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{t,3},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1}},
@@ -127,40 +129,47 @@ public class AnalisadorSintatico {
     public Stack pilha = new Stack();
     public int estado = 0;
     public int error = 0;
-    public Lexema token = Main.obterLexemas();
-
-    while (error = -1 || (token.token != AnalisadorLexico.tokenFim && token.lexema != "fim") ){
     
-    switch(tabelaSintatica[estado][token][0]){
-        case s: 
-            pilha.push(token);
-            estado = tabelaSintatica[estado][token][1];
-            pilha.push(tabelaSintatica[estado][token][1]);
-            
-            token = Main.obterLexemas();
-            break;
-            
-        case r:
-            System.out.println(gramatica[tabelaSintatica[estado][token][1]].getProducao());
-            for(int i = 0; i < gramatica[tabelaSintatica[estado][token][1]].tamanhoProducao() * 2; i++){
-                pilha.pop();
-            }
-            
-            estado = pilha.peek();
-            pilha.push(gramatica[tabelaSintatica[estado][token][1]].ladoEsquerdo);
-            pilha.push(tabelaSintatica[estado][pilha.peek()][1]);
-            
-            break;
-            
-        case acc:
-            return;
-            
-            
-        default:
-            erro();
-            break;
+    
+    
+    public void analisadorSintatico() throws IOException{
+        Lexema token = Main.obterLexemas();
+
+        while (error == -1 || (token.getToken() != AnalisadorLexico.tokenFim && token.lexema != "fim") ){
+
+        int acao = tabelaSintatica[estado][token.getToken()][0];
+        switch(acao){
+            case s:
+                pilha.push(token);
+                estado = tabelaSintatica[estado][token.getToken()][1];
+                pilha.push(tabelaSintatica[estado][token.getToken()][1]);
+
+                token = Main.obterLexemas();
+                break;
+
+            case r:
+                System.out.println(gramatica[tabelaSintatica[estado][token.getToken()][1]].getProducao());
+                for(int i = 0; i < gramatica[tabelaSintatica[estado][token.getToken()][1]].tamanhoProducao() * 2; i++){
+                    pilha.pop();
+                }
+
+                estado = (int)pilha.peek();
+                pilha.push(gramatica[tabelaSintatica[estado][token.getToken()][1]].ladoEsquerdo);
+                pilha.push(tabelaSintatica[estado][pilha.peek()][1]);
+
+                break;
+
+            case acc:
+                return;
+
+
+            default:
+                erro();
+                break;
+    }
     }
     
     
     }
 }
+
