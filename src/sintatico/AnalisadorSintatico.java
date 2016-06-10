@@ -1,6 +1,9 @@
 
 package sintatico;
 import lexico.*;
+import java.io.IOException;
+import static lexico.AnalisadorLexico.tokenFim;
+import java.util.Stack;
 /**
  *
  * @author guilhermeferreira
@@ -120,4 +123,44 @@ public class AnalisadorSintatico {
     {{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{r,25},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1},	{erro,-1}}
   
     };
+    
+    public Stack pilha = new Stack();
+    public int estado = 0;
+    public int error = 0;
+    public Lexema token = Main.obterLexemas();
+
+    while (error = -1 || (token.token != AnalisadorLexico.tokenFim && token.lexema != "fim") ){
+    
+    switch(tabelaSintatica[estado][token][0]){
+        case s: 
+            pilha.push(token);
+            estado = tabelaSintatica[estado][token][1];
+            pilha.push(tabelaSintatica[estado][token][1]);
+            
+            token = Main.obterLexemas();
+            break;
+            
+        case r:
+            System.out.println(gramatica[tabelaSintatica[estado][token][1]].getProducao());
+            for(int i = 0; i < gramatica[tabelaSintatica[estado][token][1]].tamanhoProducao() * 2; i++){
+                pilha.pop();
+            }
+            
+            estado = pilha.peek();
+            pilha.push(gramatica[tabelaSintatica[estado][token][1]].ladoEsquerdo);
+            pilha.push(tabelaSintatica[estado][pilha.peek()][1]);
+            
+            break;
+            
+        case acc:
+            return;
+            
+            
+        default:
+            erro();
+            break;
+    }
+    
+    
+    }
 }
