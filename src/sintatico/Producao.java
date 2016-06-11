@@ -10,6 +10,7 @@ public class Producao {
     private String producao;
     private int codigoProducao;
     private int tamanho;
+    private int ladoEsquerdo;
     
     public String getProducao(){
         return producao;
@@ -29,6 +30,9 @@ public class Producao {
     public int getTamanho(){
         return tamanho;
     }
+    public int getLadoEsquerdo(){
+        return ladoEsquerdo;
+    }
     public Producao(){
         
     }
@@ -37,10 +41,11 @@ public class Producao {
         this.producao = producao;
         this.codigoProducao = codigoProducao;
     }
-    public Producao(String producao, int codigoProducao, int tamanho){
+    public Producao(String producao, int codigoProducao, int tamanho, int ladoEsquerdo){
         this.producao = producao;
         this.codigoProducao = codigoProducao;
         this.tamanho = tamanho;
+        this.ladoEsquerdo = ladoEsquerdo;
     }
     
     public Producao(String producao){

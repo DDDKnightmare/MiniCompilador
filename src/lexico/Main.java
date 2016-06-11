@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package lexico;
+import sintatico.*;
 import java.io.*;
 
 
@@ -15,6 +16,7 @@ public class Main{
     public static SelecaoArquivo escolheArquivo = new SelecaoArquivo();
     
     public static AnalisadorLexico analisador = new AnalisadorLexico();
+    public static AnalisadorSintatico sintatico = new AnalisadorSintatico();
     
     
     
@@ -39,7 +41,8 @@ public static void main(String[] args) throws IOException {
     
     //enquanto nao ler EOF
     while(analisador.mapaCaracter(analisador.getC()) != AnalisadorLexico.FimArquivo){ 
-        imprimeLexemas();
+        //imprimeLexemas();
+        sintatico.analisadorSintatico();
     }
         
         
