@@ -130,6 +130,7 @@ public class AnalisadorSintatico {
     };
     
     public Stack pilha = new Stack();
+    
     public int estado = 0;
     public int error = 0;
     
@@ -201,7 +202,7 @@ public class AnalisadorSintatico {
         else if(token == AnalisadorLexico.tokenFimSe){
             return 20;
         }
-        else if(token == 21){
+        else if(token == AnalisadorLexico.tokenCifrao){
             return 21;
         }
         
@@ -214,6 +215,7 @@ public class AnalisadorSintatico {
     }
     
     public void analisadorSintatico() throws IOException{
+        pilha.push(0);
         Lexema token = Main.obterLexemas();
         //while (error == -1 || (token.getToken() != AnalisadorLexico.tokenFim && token.getLexema() != "fim") ){
         while (1==1){  
@@ -227,19 +229,20 @@ public class AnalisadorSintatico {
             
             switch(acao){
                 case s:
-                    System.out.println("estado no topo: " + estado);
+                    //System.out.println("estado no topo: " + estado);
                     pilha.push(mapeiaToken(token.getToken()));
                     estado = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
 
                     pilha.push(estado);
-                    System.out.println("token:" + token.getStringToken()+" "+ token.getLexema() +" linha: "+ token.getLinha() + " empilha " + estado);
-                    System.out.println("pilha depois de s: " + pilha.toString());
+                    //System.out.println("token:" + token.getStringToken()+" "+ token.getLexema() +" linha: "+ token.getLinha() + " empilha " + estado);
+                    //System.out.println("pilha depois de s: " + pilha.toString());
                     
-                    /*if(token.getToken() == AnalisadorLexico.tokenFim){
-                      token = new Lexema("$",21);  
+                    if(token.getToken() == AnalisadorLexico.tokenFim){
+                      token = new Lexema("$",29);  // tokenCifrao
+                      System.out.println("mapa de $" + mapeiaToken(token.getToken()) );
                     }
-                    else token = Main.obterLexemas();*/
-                    token = Main.obterLexemas();
+                    else token = Main.obterLexemas();
+                    
                     break;
 
                 case r:
@@ -259,6 +262,7 @@ public class AnalisadorSintatico {
                     break;
 
                 case acc:
+                    System.out.println("Aceitooooooo Uhuuuuuuuuuuuuuuuu!");
                     return;
 
 

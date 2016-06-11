@@ -47,6 +47,7 @@ public static final int tokenFimSe  = 25;
 public static final int tokenFim = 26;
 public static final int tokenErro = 27;
 public static final int tokenMaiorIgual = 28;
+public static final int tokenCifrao = 29;
 
 //Tipos-----------------------------------------------
 public static final int tipoInteiro = 50;
