@@ -52,8 +52,8 @@ public class AnalisadorSintatico {
         new Producao("opr -> OPR(=)",38),
         new Producao("opr -> OPR(<)",39),
         new Producao("opr -> OPR(<=)",40),
-        new Producao("opr -> OPR(>)",41),
-        new Producao("opr -> OPR(>=)",42)
+        new Producao("opr -> OPR(>)",41, 1, 16),
+        new Producao("opr -> OPR(>=)", 42, 1, 16)
     };
     public static final int s = 0;
     public static final int t = 1;
@@ -218,35 +218,35 @@ public class AnalisadorSintatico {
             }
             
             int acao = tabelaSintatica[estado][mapeiaToken(token.getToken())][0];
-            //System.out.println("token: "+ token.getStringToken() + " acao: [" + estado+ "],[" + mapeiaToken(token.getToken()) + "]" + " acao: " + acao);
+            //System.out.println("token: "+ token.getStringToken() + " linha: " + token.getLinha()+ " acao: [" + estado+ "],[" + mapeiaToken(token.getToken()) + "]" + " acao: " + acao);
             
             switch(acao){
                 case s:
                     pilha.push(mapeiaToken(token.getToken()));
                     estado = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
-                    //System.out.println("prox est:" + estado);
                     pilha.push(estado);
                     //System.out.println("empilha " + estado);
                     token = Main.obterLexemas();
+                    
                     break;
 
                 case r:
-                    //System.out.println(pilha.toString());
+                    System.out.println(pilha.toString());
                     int numProducao = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
                     for(int i = 0; i < gramatica[numProducao-1].getTamanho() * 2; i++){
                         pilha.pop();
                     }
-
+                    System.out.println(pilha.toString());
                     estado = (int)pilha.peek();
                     //System.out.println("estado: "+ estado);
                     //System.out.println("mapa: "+ mapeiaToken(token.getToken()));
                     //System.out.println(pilha.toString());
                     int ladoEsq = gramatica[numProducao-1].getLadoEsquerdo();
-                    //System.out.println("esq: "+ ladoEsq);
                     pilha.push(ladoEsq);
                     pilha.push(tabelaSintatica[estado][ladoEsq][1]);
                     //System.out.println(pilha.toString());
-                    System.out.println("Producao: " + gramatica[numProducao].getProducao());
+                    System.out.println(pilha.toString());
+                    System.out.println("Producao: " + gramatica[numProducao-1].getProducao());
                     break;
 
                 case acc:
