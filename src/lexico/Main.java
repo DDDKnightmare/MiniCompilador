@@ -40,10 +40,10 @@ public static void main(String[] args) throws IOException {
     
     
     //enquanto nao ler EOF
-    while(analisador.mapaCaracter(analisador.getC()) != AnalisadorLexico.FimArquivo){ 
+//    while(analisador.mapaCaracter(analisador.getC()) != AnalisadorLexico.FimArquivo){ 
         //imprimeLexemas();
         sintatico.analisadorSintatico();
-    }
+//    }
         
         
    //     TabelaSimbolos.imprimeHash();
