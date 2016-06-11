@@ -30,6 +30,7 @@ public class AnalisadorSintatico {
     
     Producao[] gramatica = 
     {   //Parametros: producao, codigo, tamanho, lado esquerdo
+
         new Producao("P\' -> P ", 1, 1, P_),
         new Producao("P -> inicio V A", 2, 3, P),
         new Producao("V -> varinicio LV", 3, 2, V),
@@ -72,6 +73,7 @@ public class AnalisadorSintatico {
 //        new Producao("opr -> OPR(<=)",40),
 //        new Producao("opr -> OPR(>)",41),
 //        new Producao("opr -> OPR(>=)",42)
+
     };
     public static final int s = 0;
     public static final int t = 1;
@@ -251,16 +253,21 @@ public class AnalisadorSintatico {
     
     public void analisadorSintatico() throws IOException{
         Lexema token = Main.obterLexemas();
+
         System.out.println(token.getLexema());
         int push;
         int numProducao;
         int ladoEsq;
-        while (error != -1 && (token.getToken() != AnalisadorLexico.tokenFim && token.getLexema() != "fim") ){
+        while (error != -1 || (token.getToken() != AnalisadorLexico.tokenFim && token.getLexema() != "fim") ){
+
             
             
-           
+            if(pilha.isEmpty()== false){
+                estado = (int)pilha.peek();// novo s'
+            }
+            
             int acao = tabelaSintatica[estado][mapeiaToken(token.getToken())][0];
-            System.out.println("token: "+ token.getStringToken() + " acao: [" + estado+ "],[" + mapeiaToken(token.getToken()) + "]" + " acao: " + acao);
+            //System.out.println("token: "+ token.getStringToken() + " linha: " + token.getLinha()+ " acao: [" + estado+ "],[" + mapeiaToken(token.getToken()) + "]" + " acao: " + acao);
             
             switch(acao){
                 case s:
@@ -270,10 +277,11 @@ public class AnalisadorSintatico {
                     
                     pilha.push(push);
                     estado = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
-                    token = Main.obterLexemas();
+                    token = Main.obterLexemas();               
                     break;
 
                 case r:
+
                     numProducao = tabelaSintatica[estado][mapeiaToken(token.getToken())][1]-1;
                     for(int i = 0; i < gramatica[numProducao].getTamanho() * 2; i++){
                         pilha.pop();
@@ -302,7 +310,7 @@ public class AnalisadorSintatico {
                 default:
                     erro(token);
                     return;
-                    
+                                        
     }
     }
     
