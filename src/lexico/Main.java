@@ -31,10 +31,6 @@ public class Main{
         lexema.getStringToken() + ", " + lexema.getStringTipo()  +  ']');
         
     }
-    
-    public static int getC(){
-        return analisador.getC();
-    }
 public static void main(String[] args) throws IOException {
     
     TabelaSimbolos.carregaPalavrasReservadas();
