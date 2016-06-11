@@ -74,19 +74,19 @@ public class Lexema {
             case AnalisadorLexico.tokenPontoVirgula:        return "PONTO E VIRGULA";
             case AnalisadorLexico.tokenLiteral:             return "LITERAL";
 //OPM----------------------------------------------------------------------------
-            case AnalisadorLexico.tokenMais:                return "OPM(+)";
-            case AnalisadorLexico.tokenMenos:               return "OPM(-)";
-            case AnalisadorLexico.tokenMultiplicacao:       return "OPM(*)";
-            case AnalisadorLexico.tokenDivisao:             return "OPM(/)";
+            case AnalisadorLexico.tokenMais:                return "OPM";
+            case AnalisadorLexico.tokenMenos:               return "OPM";
+            case AnalisadorLexico.tokenMultiplicacao:       return "OPM";
+            case AnalisadorLexico.tokenDivisao:             return "OPM";
 //FIM OPM------------------------------------------------------------------------
             
 //OPR----------------------------------------------------------------------------
-            case AnalisadorLexico.tokenDiferente:           return "OPR(<>)";
-            case AnalisadorLexico.tokenIgual:               return "OPR(=)";
-            case AnalisadorLexico.tokenMenor:               return "OPR(<)";
-            case AnalisadorLexico.tokenMenorIgual:          return "OPR(<=)";
-            case AnalisadorLexico.tokenMaior:               return "OPR(>)";
-            case AnalisadorLexico.tokenMaiorIgual:          return "OPR(>=)";
+            case AnalisadorLexico.tokenDiferente:           return "OPR";
+            case AnalisadorLexico.tokenIgual:               return "OPR";
+            case AnalisadorLexico.tokenMenor:               return "OPR";
+            case AnalisadorLexico.tokenMenorIgual:          return "OPR";
+            case AnalisadorLexico.tokenMaior:               return "OPR";
+            case AnalisadorLexico.tokenMaiorIgual:          return "OPR";
 //FIM OPR------------------------------------------------------------------------
             
 //ID E PALAVRAS RESERVADAS-------------------------------------------------------
@@ -104,6 +104,7 @@ public class Lexema {
             case AnalisadorLexico.palavraReservadaReal:             return "PALAVRA RESERVADA(REAL)";
             case AnalisadorLexico.palavraReservadaLiteral:          return "PALAVRA RESERVADA(LITERAL)";
 //FIM ID E PALAVRAS RESRVADAS----------------------------------------------------
+            case AnalisadorLexico.tokenCifrao:                      return "CIFRÃO";
             default: return "ERRO";
         }
     }
