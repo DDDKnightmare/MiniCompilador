@@ -18,7 +18,9 @@ public class Main{
     public static AnalisadorLexico analisador = new AnalisadorLexico();
     public static AnalisadorSintatico sintatico = new AnalisadorSintatico();
     
-    
+    public static int getC(){
+        return analisador.getC();
+    }
     
     public static Lexema obterLexemas() throws IOException{
         

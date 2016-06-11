@@ -134,6 +134,13 @@ public class Lexema {
         this.tipo = tipo;
     }
     
+    public Lexema(String lexema, int token, int tipo, int linha){
+        this.lexema = lexema;
+        this.token = token;
+        this.tipo = tipo;
+        this.linha = linha;
+    }
+    
     public Lexema(String lexema, int token){
         this.lexema = lexema;
         this.token = token;

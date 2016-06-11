@@ -42,18 +42,18 @@ public class AnalisadorSintatico {
         new Producao("CORPO -> COND CORPO", 28, 2, 35),
         new Producao("CORPO -> fimse", 29, 1, 35),
         new Producao("A -> fim", 30, 1, 24),
-        new Producao("opm -> OPM(+)",31),
-        new Producao("opm -> OPM(-)",32),
-        new Producao("opm -> OPM(*)",33),
-        new Producao("opm -> OPM(/)",34),
-        new Producao("LD -> OPM(+) OPRD opm OPRD",35),
-        new Producao("LD -> OPM(-) OPRD opm OPRD",36),
-        new Producao("opr -> OPR(<>)",37),
-        new Producao("opr -> OPR(=)",38),
-        new Producao("opr -> OPR(<)",39),
-        new Producao("opr -> OPR(<=)",40),
-        new Producao("opr -> OPR(>)",41, 1, 16),
-        new Producao("opr -> OPR(>=)", 42, 1, 16)
+  //      new Producao("opm -> OPM(+)",31),
+  //      new Producao("opm -> OPM(-)",32),
+//        new Producao("opm -> OPM(*)",33),
+//        new Producao("opm -> OPM(/)",34),
+//        new Producao("LD -> OPM OPRD opm OPRD",35),
+//        new Producao("LD -> OPM(-) OPRD opm OPRD",36),
+//        new Producao("opr -> OPR(<>)",37),
+//        new Producao("opr -> OPR(=)",38),
+//        new Producao("opr -> OPR(<)",39),
+//        new Producao("opr -> OPR(<=)",40),
+//        new Producao("opr -> OPR(>)",41, 1, 16),
+//        new Producao("opr -> OPR(>=)", 42, 1, 16)
     };
     public static final int s = 0;
     public static final int t = 1;
@@ -215,13 +215,16 @@ public class AnalisadorSintatico {
     }
     
     public void analisadorSintatico() throws IOException{
-        pilha.push(0);
+        pilha.push(mapeiaToken(AnalisadorLexico.tokenCifrao));
+        pilha.push(estado);
         Lexema token = Main.obterLexemas();
         //while (error == -1 || (token.getToken() != AnalisadorLexico.tokenFim && token.getLexema() != "fim") ){
-        while (1==1){  
+        while (true){  
             
-            if(pilha.isEmpty()== false){
+            if(!pilha.isEmpty()){
                 estado = (int)pilha.peek();// novo s'
+            }else{
+                erro(token);
             }
             
             int acao = tabelaSintatica[estado][mapeiaToken(token.getToken())][0];
@@ -231,18 +234,17 @@ public class AnalisadorSintatico {
                 case s:
                     //System.out.println("estado no topo: " + estado);
                     pilha.push(mapeiaToken(token.getToken()));
+                    
+                    
                     estado = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
 
                     pilha.push(estado);
-                    //System.out.println("token:" + token.getStringToken()+" "+ token.getLexema() +" linha: "+ token.getLinha() + " empilha " + estado);
-                    //System.out.println("pilha depois de s: " + pilha.toString());
                     
-                    if(token.getToken() == AnalisadorLexico.tokenFim){
-                      token = new Lexema("$",29);  // tokenCifrao
-                      System.out.println("mapa de $" + mapeiaToken(token.getToken()) );
+                    
+                    token = Main.obterLexemas();
+                    if(!token.getLexema().equals("fim") && token.getToken() == AnalisadorLexico.tokenFim && Main.getC() == -1){
+                        token = new Lexema("FIM DO ARQUIVO", AnalisadorLexico.tokenCifrao, 0, token.getLinha());
                     }
-                    else token = Main.obterLexemas();
-                    
                     break;
 
                 case r:
@@ -262,11 +264,13 @@ public class AnalisadorSintatico {
                     break;
 
                 case acc:
-                    System.out.println("Aceitooooooo Uhuuuuuuuuuuuuuuuu!");
+                    System.out.println(pilha.toString());
+//                    System.out.println("Aceitooooooo Uhuuuuuuuuuuuuuuuu!");
                     return;
 
 
                 default:
+                    System.out.println("Estado:      "+estado);
                     erro(token);
                     return;
                     

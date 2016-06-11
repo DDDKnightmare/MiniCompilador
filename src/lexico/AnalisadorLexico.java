@@ -162,7 +162,7 @@ private void mensagemErro(){
 
 
 
-public int linha = 0;
+public int linha = 1;
 public int coluna = 0;
 
 
@@ -741,14 +741,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
         }
         
         
-        if(this.mapaCaracter(c) == FimArquivo                   &&
-           estado == 0                                          &&
-           lexemas.get(lexemas.size()-1).getToken() != tokenFim ){
-                
-                lexemas.add(new Lexema("FIM DO ARQUIVO",tokenFim));
-                this.setLinha(linha);
-                numeroLexemas += 1;
-        }
+        
         //System.out.print((char)c);
         //System.out.println("[" + (char)c +",  " + estado  + "]");
         
