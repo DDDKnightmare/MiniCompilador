@@ -14,7 +14,7 @@ import java.util.*;
 
 public class TabelaSimbolos{
     
-    private static Hashtable<String, Lexema> simbolos = new Hashtable<String, Lexema>();
+    public static Hashtable<String, Lexema> simbolos = new Hashtable<String, Lexema>();
     
     public static void carregaPalavrasReservadas(){
         simbolos.put("inicio", new Lexema("inicio", AnalisadorLexico.tokenInicio, 0));

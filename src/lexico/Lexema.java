@@ -26,6 +26,19 @@ public class Lexema {
         return this.tipo;
     }
     
+    public static String getStringTipo(int tipo){
+        switch(tipo){
+            case AnalisadorLexico.tipoInteiro                   : return "INTEIRO";
+            case AnalisadorLexico.tipoLiteral                   : return "LITERAL";
+            case AnalisadorLexico.tipoReal                      : return "REAL";
+            case AnalisadorLexico.palavraReservadaInteiro       : return "PALAVRA RESERVADA(INTEIRO)";
+            case AnalisadorLexico.palavraReservadaReal          : return "PALAVRA RESERVADA(REAL)";
+            case AnalisadorLexico.palavraReservadaLiteral       : return "PALAVRA RESERVADA(LITERAL)";
+            default: return "";
+        }
+    }
+    
+    
     public String getStringTipo(){
         switch(tipo){
             case AnalisadorLexico.tipoInteiro                   : return "INTEIRO";

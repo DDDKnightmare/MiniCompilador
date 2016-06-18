@@ -156,14 +156,14 @@ private void mensagemErro(){
     System.out.println("ERRO: ENTRADA INESPERADA\n" +
                        "ESPERADO: "+this.getEntradaEsperada(ultimoEstado)+"\n"+
                        "LIDO: " + this.getValorLido()+"\n" +
-                       "NA LINHA: " + (linha+1) + ", COLUNA: " + (coluna+1));
+                       "NA LINHA: " + (linha) + ", COLUNA: " + (coluna));
 }
 
 
 
 
 public int linha = 1;
-public int coluna = 0;
+public int coluna = 1;
 
 
 private int ultimoEstado = 999;
