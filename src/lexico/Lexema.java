@@ -17,6 +17,17 @@ public class Lexema {
     private int token;
     private int tipo = 0;
     private int linha = 0;//linha onde o lexema se encontra
+    private String classe = "";
+    
+    
+    public void setClasse(String classe){
+        this.classe = classe;
+    }
+    
+    public String getClasse(){
+        return classe;
+    }
+    
     
     public void setTipo(int tipo){
         this.tipo = tipo;
@@ -37,6 +48,8 @@ public class Lexema {
             default: return "";
         }
     }
+    
+    
     
     
     public String getStringTipo(){

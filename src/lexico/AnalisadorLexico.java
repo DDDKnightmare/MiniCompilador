@@ -56,6 +56,15 @@ public static final int tipoLiteral = 52;
 public static final int palavraReservadaInteiro = 53;
 public static final int palavraReservadaReal = 54;
 public static final int palavraReservadaLiteral = 55;
+public static final int tipoSoma = 56;
+public static final int tipoSubtracao = 57;
+public static final int tipoMultiplicacao = 58;
+public static final int tipoDivisao = 59;
+public static final int tipoMaior = 60;
+public static final int tipoMaiorIgual = 61;
+public static final int tipoMenor = 62;
+public static final int tipoMenorIgual = 63;
+public static final int tipoDiferente = 64;
 //FimTipos
 //public static final int tokenComentario = 500;
 //FimTokens-------------------------------------------
@@ -176,7 +185,9 @@ private int c = 999;
 ArrayList<Lexema> lexemas = new ArrayList<Lexema>();
 
 
-
+public void setClasse(int indice, String classe){
+    lexemas.get(indice).setClasse(classe);
+}
 
 public Lexema[] getArrayLexemas(){
     return lexemas.toArray(new Lexema[lexemas.size()]);
@@ -572,6 +583,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                         
                     
                     break;
+// Fim ID-------------------------------------------------------------------------------------
 // Comentarios--------------------------------------------------------------------------------
                 case 17:
                     if(this.mapaCaracter(c) != FimArquivo){
@@ -604,7 +616,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                     coluna += 1;
                     break;
 // Fim Comentarios----------------------------------------------------------------------------
-// Fim ID-------------------------------------------------------------------------------------
+
 // Operadores Relacionais ou Atribuição-------------------------------------------------------
                 case 20:
                     if(this.mapaCaracter(c) == Subtracao        ||
@@ -747,7 +759,43 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
         
 }   while(estado != 0   &&  ultimoEstado != 18);
     
-    
+    switch(ultimoEstado){
+        case 1: case 3: case 6: case 8: case 11: case 13:
+            this.setClasse(numeroLexemas - 1, "CONSTANTE NUMERICA");
+            break;
+            
+        case 15:
+            this.setClasse(numeroLexemas - 1, "CONSTANTE LITERAL");
+            break;
+            
+        case 16:
+            if(lexemas.get(numeroLexemas - 1).getTipo() == tokenId){
+                this.setClasse(numeroLexemas - 1, "IDENTIFICADOR");
+            }else{
+                this.setClasse(numeroLexemas - 1, "PALAVRA RESERVADA");
+            }
+            break;
+                            
+        case 19: case 20: case 21: case 22: case 23: case 24: case 32:
+            this.setClasse(numeroLexemas - 1, "OPR");
+            break;
+            
+        case 25: case 26: case 27: case 28:
+            this.setClasse(numeroLexemas - 1, "OPM");
+            break;
+            
+        case 29: 
+            this.setClasse(numeroLexemas - 1, "AB_P");
+            break;
+            
+        case 30:
+            this.setClasse(numeroLexemas - 1, "FC_P");
+            break;
+            
+        case 31:
+            this.setClasse(numeroLexemas - 1, "DELIMITADOR");
+            
+    }
     //System.out.println("\n");
     
     return lexemas.get(lexemas.size()-1);

@@ -2,31 +2,76 @@
 package sintatico;
 import lexico.*;
 import java.io.IOException;
-import java.util.Arrays;
-import static lexico.AnalisadorLexico.tokenFim;
-import java.util.Stack;
+import java.util.*;
+import static lexico.AnalisadorLexico.*;
 /**
  *
  * @author guilhermeferreira
  */
 public class AnalisadorSintatico {
-    private void ErroSemantico(Lexema token, int tipoEsperado, int classeEsperada){
-        System.out.println("Erro semântico na linha: " + token.getLinha() +
-                "/nTipoEsperado: " + Lexema.getStringTipo(token.getTipo()) +
-                "/nClasse do token: " + Lexema.getStringClasse());
-    }
+    
+    //private String programaGerado = "";
+    
+    //Hashtable<String, Lexema> variaveis = new Hashtable<String, Lexema>();
+    
+    /*private void ErroSemantico(Lexema token){
+        System.out.println("Erro semântico na linha: " + token.getLinha() + "  com o lexema: " + token.getLexema() +
+        "  do tipo: " + token.getStringTipo());
+    }*/
+    
+    
+    
+    /*private String impressaoSemantico;
+    
     private void regraSemantica(Stack pilha, int numeroProducao){
         switch (numeroProducao){
+            case 5: 
+                programaGerado += "\n\n\n";
+                break;
             case 6:
-                Lexema id = (Lexema)pilha.elementAt(pilha.capacity() - 2);
-                if(id.getTipo() != 0){
-                    if(!TabelaSimbolos.simbolos.containsKey(id)){
-                        
-                    }
+                Lexema id = (Lexema)pilha.get(pilha.capacity() - 4);
+                if(!variaveis.containsKey(id.getLexema())){
+                    variaveis.put(id.getLexema(), id);
                 }
+                if(id.getTipo() != 0)
+                    ErroSemantico(id); // variavel ja declarada
+                if(TabelaSimbolos.simbolos.contains(id.getLexema())){
+                    if(TabelaSimbolos.simbolos.containsKey(variaveis.get().getLexema())){
+                        if(TabelaSimbolos.simbolos.get(variaveis.get(variaveis.size() - 1).getLexema()).getTipo() == 0){
+                            variaveis.get(variaveis.size() - 1).setTipo((int)pilha.get(pilha.capacity() - 2));
+                            
+                        }else{
+                            ErroSemantico(id); // variável já declarada
+                        }
+                    }else{
+                        ErroSemantico(id); //variável não salva na tabela hash
+                    }
+                    
+                }else{
+                    ErroSemantico(id); //variável já possui tipo;
+                }
+                break;
+                
+            case 7:
+                pilha.remove(pilha.capacity() - 2);
+                pilha.add(pilha.capacity() - 1, AnalisadorLexico.tipoInteiro);
+                break;
+                
+            case 8:
+                pilha.remove(pilha.capacity() - 2);
+                pilha.add(pilha.capacity() - 1, AnalisadorLexico.tipoReal);
+                break;
+                
+            case 9:
+                pilha.remove(pilha.capacity() - 2);
+                pilha.add(pilha.capacity() - 1, AnalisadorLexico.tipoLiteral);
+                break;
+                
+            case 11:
+                if(pilha.get())
         }
         
-    }
+    }*/
     
     Producao[] gramatica = 
     {   //Parametros: producao, codigo, tamanho, lado esquerdo
