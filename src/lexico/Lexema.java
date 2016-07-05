@@ -57,9 +57,9 @@ public class Lexema {
             case AnalisadorLexico.tipoInteiro                   : return "INTEIRO";
             case AnalisadorLexico.tipoLiteral                   : return "LITERAL";
             case AnalisadorLexico.tipoReal                      : return "REAL";
-            case AnalisadorLexico.palavraReservadaInteiro       : return "PALAVRA RESERVADA(INTEIRO)";
-            case AnalisadorLexico.palavraReservadaReal          : return "PALAVRA RESERVADA(REAL)";
-            case AnalisadorLexico.palavraReservadaLiteral       : return "PALAVRA RESERVADA(LITERAL)";
+//            case AnalisadorLexico.palavraReservadaInteiro       : return "PALAVRA RESERVADA(INTEIRO)";
+//            case AnalisadorLexico.palavraReservadaReal          : return "PALAVRA RESERVADA(REAL)";
+//            case AnalisadorLexico.palavraReservadaLiteral       : return "PALAVRA RESERVADA(LITERAL)";
             default: return "";
         }
     }
@@ -113,6 +113,7 @@ public class Lexema {
             case AnalisadorLexico.tokenMenorIgual:          return "OPR";
             case AnalisadorLexico.tokenMaior:               return "OPR";
             case AnalisadorLexico.tokenMaiorIgual:          return "OPR";
+            case AnalisadorLexico.tokenOPRIgual:            return "OPR";
 //FIM OPR------------------------------------------------------------------------
             
 //ID E PALAVRAS RESERVADAS-------------------------------------------------------
@@ -165,6 +166,21 @@ public class Lexema {
         this.token = token;
         this.tipo = tipo;
         this.linha = linha;
+    }
+    
+    public Lexema(String lexema, int token, int tipo, int linha, String classe){
+        this.lexema = lexema;
+        this.token = token;
+        this.tipo = tipo;
+        this.linha = linha;
+        this.classe = classe;
+    }
+    
+    public Lexema(String lexema, int token, int tipo, String classe){
+        this.lexema = lexema;
+        this.token = token;
+        this.tipo = tipo;
+        this.classe = classe;
     }
     
     public Lexema(String lexema, int token){
