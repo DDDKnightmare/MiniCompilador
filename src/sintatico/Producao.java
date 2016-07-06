@@ -1,6 +1,6 @@
 
 package sintatico;
-import lexico.Lexema;
+
 /**
  *
  * @author guilhermeferreira
@@ -10,7 +10,7 @@ public class Producao {
     private String producao;
     private int codigoProducao;
     private int tamanho;
-    private Lexema ladoEsquerdo;
+    private int ladoEsquerdo;
     
     public String getProducao(){
         return producao;
@@ -30,7 +30,7 @@ public class Producao {
     public int getTamanho(){
         return tamanho;
     }
-    public Lexema getLadoEsquerdo(){
+    public int getLadoEsquerdo(){
         return ladoEsquerdo;
     }
     public Producao(){
@@ -41,7 +41,7 @@ public class Producao {
         this.producao = producao;
         this.codigoProducao = codigoProducao;
     }
-    public Producao(String producao, int codigoProducao, int tamanho, Lexema ladoEsquerdo){
+    public Producao(String producao, int codigoProducao, int tamanho, int ladoEsquerdo){
         this.producao = producao;
         this.codigoProducao = codigoProducao;
         this.tamanho = tamanho;
