@@ -10,68 +10,171 @@ import static lexico.AnalisadorLexico.*;
  */
 public class AnalisadorSintatico {
     
-    //private String programaGerado = "";
+    private String programaGerado = "";
     
-    //Hashtable<String, Lexema> variaveis = new Hashtable<String, Lexema>();
     
-    /*private void ErroSemantico(Lexema token){
+    
+    Stack<String> variaveis = new Stack<String>();
+    
+    int numVar = 0;
+    
+    Stack<Atributos> atributos = new Stack<Atributos>();
+    
+    
+    
+    private void ErroSemantico(Lexema token){
         System.out.println("Erro semântico na linha: " + token.getLinha() + "  com o lexema: " + token.getLexema() +
         "  do tipo: " + token.getStringTipo());
-    }*/
+    }
     
     
     
-    /*private String impressaoSemantico;
+    private String impressaoSemantico;
     
-    private void regraSemantica(Stack pilha, int numeroProducao){
+    private void regraSemantica(int numeroProducao, Lexema token){
+        Atributos aux;
+        Atributos aux2;
+        String exp;
         switch (numeroProducao){
             case 5: 
                 programaGerado += "\n\n\n";
                 break;
             case 6:
-                Lexema id = (Lexema)pilha.get(pilha.capacity() - 4);
-                if(!variaveis.containsKey(id.getLexema())){
-                    variaveis.put(id.getLexema(), id);
-                }
-                if(id.getTipo() != 0)
-                    ErroSemantico(id); // variavel ja declarada
-                if(TabelaSimbolos.simbolos.contains(id.getLexema())){
-                    if(TabelaSimbolos.simbolos.containsKey(variaveis.get().getLexema())){
-                        if(TabelaSimbolos.simbolos.get(variaveis.get(variaveis.size() - 1).getLexema()).getTipo() == 0){
-                            variaveis.get(variaveis.size() - 1).setTipo((int)pilha.get(pilha.capacity() - 2));
-                            
-                        }else{
-                            ErroSemantico(id); // variável já declarada
-                        }
-                    }else{
-                        ErroSemantico(id); //variável não salva na tabela hash
-                    }
-                    
-                }else{
-                    ErroSemantico(id); //variável já possui tipo;
-                }
                 break;
                 
-            case 7:
-                pilha.remove(pilha.capacity() - 2);
-                pilha.add(pilha.capacity() - 1, AnalisadorLexico.tipoInteiro);
+            case 7:        case 8:          case 9:
+                aux = atributos.pop();
+                aux.setVariavel("TIPO");
+                atributos.push(aux);
                 break;
                 
-            case 8:
-                pilha.remove(pilha.capacity() - 2);
-                pilha.add(pilha.capacity() - 1, AnalisadorLexico.tipoReal);
-                break;
-                
-            case 9:
-                pilha.remove(pilha.capacity() - 2);
-                pilha.add(pilha.capacity() - 1, AnalisadorLexico.tipoLiteral);
-                break;
+           
                 
             case 11:
-                if(pilha.get())
+                break;
+                
+            case 12:
+                break;
+                
+            case 13:        case 14:
+                aux = atributos.pop();
+                aux.setVariavel("ARG");
+                atributos.push(aux);
+                break;
+                
+            case 15:
+                aux = atributos.pop();
+                if(TabelaSimbolos.simbolos.containsKey(aux.getLexema())     &&
+                   TabelaSimbolos.simbolos.get(aux.getLexema()).getTipo() != 0)
+                    aux.setVariavel("ARG");
+                else 
+                    System.out.println("Erro: Variável não declarada!");
+                    ErroSemantico(token);
+                break;
+                
+            case 17:
+                exp = atributos.pop().getLexema();// ;
+                aux2 = atributos.pop();// LD
+                aux = atributos.pop(); // rcb
+                if((TabelaSimbolos.simbolos.get(atributos.peek().getLexema())) == null ||
+                    (TabelaSimbolos.simbolos.get(atributos.peek().getLexema())).getTipo() == 0){
+                    
+                }
+                if(atributos.peek().getTipo() == aux2.getTipo()){
+                    exp = atributos.peek().getLexema() + " " + aux.getLexema() + " " + aux2.getLexema() + ";";
+                    programaGerado += exp;
+                    
+                }else{
+                    System.out.println("Erro: Operandos com tipos incompatíveis!");
+                    ErroSemantico(token);
+                }
+                
+                break;
+                
+            case 18:
+                aux = atributos.pop(); //OPRD 2
+                aux2 = atributos.pop();// opm
+                if(TabelaSimbolos.simbolos.containsKey(aux.getLexema())     &&
+                   TabelaSimbolos.simbolos.get(aux.getLexema()).getTipo() != 0  &&
+                   TabelaSimbolos.simbolos.containsKey((atributos.peek()).getLexema())     &&
+                   TabelaSimbolos.simbolos.get((atributos.peek()).getLexema()).getTipo() != 0  &&
+                   aux.getTipo() == atributos.peek().getTipo()      &&
+                   aux.getTipo() != "LITERAL"                       &&
+                   atributos.peek().getTipo() != "LITERAL"){
+                    exp = aux2.getLexema() + " " + aux.getLexema();
+                    aux = atributos.pop();
+                    exp = aux.getLexema() + " " + exp;
+                    aux.setLexema("T"+Integer.toString(numVar));
+                    programaGerado += aux.getLexema() + " = " + exp;
+                    aux.setVariavel("EXP_R");
+                    variaveis.push(aux.getLexema());
+                    atributos.push(aux);
+                    numVar++;
+                }else{
+                    System.out.println("Erro: Operandos com tipos incompatíveis!");
+                    ErroSemantico(token);
+                }
+                break;
+                
+            case 19:
+                aux = atributos.pop();
+                aux.setVariavel("LD");
+                atributos.push(aux);
+                break;
+                
+            case 20:
+                aux = atributos.pop();
+                if(TabelaSimbolos.simbolos.containsKey(aux.getLexema())     &&
+                   TabelaSimbolos.simbolos.get(aux.getLexema()).getTipo() != 0){
+                    aux.setVariavel("OPRD");
+                }
+                else
+                    System.out.println("Erro: Variável nao declarada!");
+                    ErroSemantico(token);
+                break;
+                
+            case 21:
+                aux = atributos.pop();
+                aux.setVariavel("OPRD");
+                atributos.push(aux);
+                break;
+                
+            case 23:
+                programaGerado += "}";
+                break;
+                
+            case 24:
+                atributos.remove(atributos.size() - 4);
+                atributos.remove(atributos.size() - 2);
+                programaGerado += "if(" + atributos.get(atributos.size() - 2).getLexema() + "){";
+                break;
+                
+            case 25:
+                aux = atributos.pop(); //OPRD 2
+                aux2 = atributos.pop();// opr
+                if(aux.getTipo() == atributos.peek().getTipo()){
+                    exp = aux2.getLexema() + " " + aux.getLexema();
+                    aux = atributos.pop();
+                    exp = aux.getLexema() + " " + exp;
+                    aux.setLexema("T"+Integer.toString(numVar));
+                    programaGerado += aux.getLexema() + " = " + exp;
+                    aux.setVariavel("EXP_R");
+                    variaveis.push(aux.getLexema());
+                    atributos.push(aux);
+                    numVar++;
+                }else{
+                    System.out.println("Erro: Operandos com tipos incompatíveis!");
+                    ErroSemantico(token);
+                }
+                
+                
+                break;
+                
+            default:
+                break;
         }
         
-    }*/
+    }
     
     Producao[] gramatica = 
     {   //Parametros: producao, codigo, tamanho, lado esquerdo
@@ -234,7 +337,8 @@ public class AnalisadorSintatico {
             return 15;
         if(token == AnalisadorLexico.tokenMenor || token == AnalisadorLexico.tokenMenorIgual 
                 || token == AnalisadorLexico.tokenDiferente || token == AnalisadorLexico.tokenMaior 
-                || token == AnalisadorLexico.tokenMaiorIgual || token == AnalisadorLexico.tokenIgual )
+                || token == AnalisadorLexico.tokenMaiorIgual || token == AnalisadorLexico.tokenIgual 
+                || token == AnalisadorLexico.tokenOPRIgual)
             return 16;
         if(token == AnalisadorLexico.tokenSe)
             return 17;
@@ -275,8 +379,8 @@ public class AnalisadorSintatico {
                 case s:
                     //System.out.println("estado no topo: " + estado);
                     pilha.push(mapeiaToken(token.getToken()));
-                    
-                    
+                    atributos.push(new Atributos(token.getStringToken(),token.getLexema(),token.getStringTipo(),token.getClasse()));
+                    //                          Terminal ou ñ terminal,   lexema,            tipo,               classe
                     estado = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
 
                     pilha.push(estado);
@@ -291,7 +395,7 @@ public class AnalisadorSintatico {
                 case r:
                     int numProducao = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
                     
-                    
+                    regraSemantica(numProducao, token);
                     
                     for(int i = 0; i < gramatica[numProducao-1].getTamanho() * 2; i++){
                         pilha.pop();

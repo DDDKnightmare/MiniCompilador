@@ -48,6 +48,8 @@ public static final int tokenFim = 26;
 public static final int tokenErro = 27;
 public static final int tokenMaiorIgual = 28;
 public static final int tokenCifrao = 29;
+public static final int tokenOPRIgual = 30;
+public static final int tokenPalavraReservada = 31;
 
 //Tipos-----------------------------------------------
 public static final int tipoInteiro = 50;
@@ -65,6 +67,7 @@ public static final int tipoMaiorIgual = 61;
 public static final int tipoMenor = 62;
 public static final int tipoMenorIgual = 63;
 public static final int tipoDiferente = 64;
+public static final int tipoOPRIgual = 65;
 //FimTipos
 //public static final int tokenComentario = 500;
 //FimTokens-------------------------------------------
@@ -117,7 +120,7 @@ private int tabelaTransicao[][] = {
 /*Estado 16*/   {16,    16,     16,     16,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,          0},
 /*Estado 17*/   {17,    17,     17,     17,     17,     17,     17,     17,     17,     17,     17,     17,     17,     17,     17,     17,     17,     18,     17,     17,     17,         -1},
 /*Estado 18*/   { 0,     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,          0},
-/*Estado 19*/   { 0,     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,          0},
+/*Estado 19*/   { 0,     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,     33,      0,      0,      0,      0,      0,      0,      0,          0},
 /*Estado 20*/   { 0,     0,      0,      0,      0,     21,      0,      0,      0,      0,      0,      0,     23,     22,      0,      0,      0,      0,      0,      0,      0,          0},
 /*Estado 21*/   { 0,     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,          0},
 //              L       D       E       _        +      -       *       /       "       .       ;       <       >       =       (       )       {       }       Espaço  \n    Outro     Fim de Arquivo
@@ -132,7 +135,8 @@ private int tabelaTransicao[][] = {
 /*Estado 29*/   { 0,     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,          0},
 /*Estado 30*/   { 0,     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,          0},
 /*Estado 31*/   { 0,     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,          0},
-/*Estado 32*/   { 0,     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,          0}
+/*Estado 32*/   { 0,     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,          0},
+/*Estado 33*/   { 0,     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,     33,      0,      0,      0,      0,      0,      0,      0,          0}
 };
 //Fim Tabela de Transição
 
@@ -300,6 +304,7 @@ public int mapaEstado(int estado){
         case 30: return tokenFechaParenteses;
         case 31: return tokenPontoVirgula;
         case 32: return tokenMaiorIgual;
+        case 33: return tokenOPRIgual;
         default: return tokenErro;
     }
 }
@@ -618,6 +623,18 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
 // Fim Comentarios----------------------------------------------------------------------------
 
 // Operadores Relacionais ou Atribuição-------------------------------------------------------
+                case 19:
+                     if(this.mapaCaracter(c) == Igual){
+                         this.concatenarLexema(numeroLexemas, c);
+                         coluna++;
+                     }else{
+                     this.setToken(numeroLexemas, this.mapaEstado(estado));
+                     this.setLinha(linha);
+                     numeroLexemas += 1;
+                     
+                     }
+                     break;
+                
                 case 20:
                     if(this.mapaCaracter(c) == Subtracao        ||
                        this.mapaCaracter(c) == Igual            ||
@@ -646,9 +663,9 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
 // Fim Operadores Relacionais
 
 // Estados Finais Que nao sao mantidos com nenhuma Entrada
-                case 19:    case 21:    case 22:    case 23:    
-                case 25:    case 26:    case 27:    case 28:    
-                case 29:    case 30:    case 31:    case 32:
+                case 21:    case 22:    case 23:    case 25:    
+                case 26:    case 27:    case 28:    case 29:    
+                case 30:    case 31:    case 32:    case 33:
                     this.setToken(numeroLexemas, this.mapaEstado(estado));
                     this.setLinha(linha);
                     numeroLexemas += 1;

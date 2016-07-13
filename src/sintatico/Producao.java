@@ -33,6 +33,49 @@ public class Producao {
     public int getLadoEsquerdo(){
         return ladoEsquerdo;
     }
+    
+    
+    
+    public String getStringLadoEsquerdo(){
+        switch (ladoEsquerdo){
+            case 22:
+                return "P";
+            case 23:
+                return "V";
+            case 24:
+                return "A";
+            case 25:
+                return "LV";
+            case 26:
+                return "D";
+            case 27:
+                return "TIPO";
+            case 28:
+                return "ES";
+            case 29:
+                return "ARG";
+            case 30:
+                return "CMD";
+            case 31:
+                return "LD";
+            case 32:
+                return "OPRD";
+            case 33:
+                return "COND";
+            case 34:
+                return "CABECALHO";
+            case 35:
+                return "CORPO";
+            case 36:
+                return "EXP_R";
+            default:
+                System.out.println( "\nErro: Não terminal inexistente! Código do não terminal que causou erro:" + ladoEsquerdo);
+                System.exit(0);
+                return "";
+            
+        }
+    }
+    
     public Producao(){
         
     }
