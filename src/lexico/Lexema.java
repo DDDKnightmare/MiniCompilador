@@ -74,7 +74,30 @@ public class Lexema {
         }
     }
     
-    
+    public int getIntTipo(){
+        switch(this.lexema){
+            case "inteiro":
+                return AnalisadorLexico.tipoInteiro;
+            case "literal":
+                return AnalisadorLexico.tipoLiteral;
+            case "real":
+                return AnalisadorLexico.tipoReal;
+            case ">":
+                return AnalisadorLexico.tipoMaior;
+            case "<>":
+                return AnalisadorLexico.tipoDiferente;
+            case ">=":
+                return AnalisadorLexico.tipoMaiorIgual;
+            case "<":
+                return AnalisadorLexico.tipoMenor;
+            case "<=":
+                return AnalisadorLexico.tipoMenorIgual;
+            case "==":
+                return AnalisadorLexico.tipoOPRIgual;
+            default:
+                return -1;
+        }
+    }
     public String getStringTipo(){
         switch(tipo){
             case AnalisadorLexico.tipoInteiro                   : return "INTEIRO";
