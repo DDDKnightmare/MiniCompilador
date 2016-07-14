@@ -233,6 +233,7 @@ public class AnalisadorSintatico {
         
         pilha.push(estado);
         Lexema token = Main.obterLexemas();
+        System.out.println("token lido: " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo());
         //while (error == -1 || (token.getToken() != AnalisadorLexico.tokenFim && token.getLexema() != "fim") ){
         while (true){  
             
@@ -251,7 +252,7 @@ public class AnalisadorSintatico {
                     pilha.push(mapeiaToken(token.getToken()));
                     atributos.push(new Atributos(token.getStringToken(),  token));
                     //                          Terminal ou ñ terminal,   atributos
-                    System.out.println("empilhei o token " + token.getStringToken() + " q e " + token.getLexema() );
+                    System.out.println("empilhei o token " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo() );
                     estado = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
 
                     pilha.push(estado);
