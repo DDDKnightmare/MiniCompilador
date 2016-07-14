@@ -9,7 +9,7 @@ public class Atributos {
     
     private String variavel; // terminal ou não terminal.
     private String lexema; 
-    private String tipo;
+    private int tipo;
     private String classe;
     
     //get
@@ -21,7 +21,7 @@ public class Atributos {
         return lexema;
     }
     
-    public String getTipo(){
+    public int getTipo(){
         return tipo;
     }
     
@@ -39,7 +39,7 @@ public class Atributos {
         this.lexema = lex;
     }
     
-    public void setTipo(String tipo){
+    public void setTipo(int tipo){
         this.tipo = tipo;
     }
     
@@ -53,7 +53,7 @@ public class Atributos {
         
     }
     
-    public Atributos(String variavel, String lexema, String tipo, String classe){
+    public Atributos(String variavel, String lexema, int tipo, String classe){
         this.variavel = variavel;
         this.lexema = lexema;
         this.tipo = tipo;
