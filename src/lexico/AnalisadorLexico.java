@@ -48,7 +48,6 @@ public static final int tokenFim = 26;
 public static final int tokenErro = 27;
 public static final int tokenMaiorIgual = 28;
 public static final int tokenCifrao = 29;
-public static final int tokenOPRIgual = 30;
 public static final int tokenPalavraReservada = 31;
 
 //Tipos-----------------------------------------------
@@ -67,8 +66,13 @@ public static final int tipoMaiorIgual = 61;
 public static final int tipoMenor = 62;
 public static final int tipoMenorIgual = 63;
 public static final int tipoDiferente = 64;
-public static final int tipoOPRIgual = 65;
-//FimTipos
+public static final int tipoRCB = 65;
+public static final int tipoPontoVirgula = 66;
+public static final int tipoIgual = 67;
+public static final int tipoPalavraReservada = 68;
+public static final int tipoAbreParenteses = 69;
+public static final int tipoFechaParenteses = 70;
+//FimTipos-------------------------------------------
 //public static final int tokenComentario = 500;
 //FimTokens-------------------------------------------
 //Entradas--------------------------------------------
@@ -304,7 +308,6 @@ public int mapaEstado(int estado){
         case 30: return tokenFechaParenteses;
         case 31: return tokenPontoVirgula;
         case 32: return tokenMaiorIgual;
-        case 33: return tokenOPRIgual;
         default: return tokenErro;
     }
 }
@@ -826,6 +829,52 @@ public int mapaTipo(){
             return tipoReal;
         case 15:
             return tipoLiteral;
+        case 16: 
+// Verificando se é id ou palavra reservada
+                switch(this.getLexema(numeroLexemas)){
+                    case "inicio":      case "varinicio":       case "varfim":
+                    case "escreva":     case "leia":            case "se":
+                    case "entao":       case "fimse":           case "fim":
+                        return tipoPalavraReservada;
+                    
+                    case "literal":
+                        return tipoLiteral;
+                    case "inteiro":
+                        return tipoInteiro;
+                    case "real":
+                        return tipoReal;
+                    default:
+                        return 0;
+                }
+                
+        case 19: 
+            return tipoIgual;
+        case 20: 
+            return tipoMenor;
+        case 21: 
+            return tipoRCB;
+        case 22: 
+            return tipoMenorIgual;
+        case 23: 
+            return tipoDiferente;
+        case 24: 
+            return tipoMaior;
+        case 25: 
+            return tipoSoma;
+        case 26: 
+            return tipoSubtracao;
+        case 27: 
+            return tipoMultiplicacao;
+        case 28: 
+            return tipoDivisao;
+        case 29: 
+            return tipoAbreParenteses;
+        case 30: 
+            return tipoFechaParenteses;
+        case 31: 
+            return tipoPontoVirgula;
+        case 32: 
+            return tokenMaiorIgual;
         default:
             return 0;
     }

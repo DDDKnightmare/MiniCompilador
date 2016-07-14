@@ -1,6 +1,6 @@
 
 package sintatico;
-
+import lexico.Lexema;
 /**
  *
  * @author guilhermeferreira
@@ -8,25 +8,31 @@ package sintatico;
 public class Atributos {
     
     private String variavel; // terminal ou não terminal.
-    private String lexema; 
-    private int tipo;
-    private String classe;
+    private Lexema lexema;
     
     //get
     public String getVar(){
         return variavel;
     }
     
+    public int getLinha(){
+        return lexema.getLinha();
+    }
+    
     public String getLexema(){
-        return lexema;
+        return lexema.getLexema();
+    }
+    
+    public String getStringTipo(){
+        return lexema.getStringTipo();
     }
     
     public int getTipo(){
-        return tipo;
+        return lexema.getTipo();
     }
     
     public String getClasse(){
-        return classe;
+        return lexema.getClasse();
     }
     //Fim get
     
@@ -36,15 +42,15 @@ public class Atributos {
     }
     
     public void setLexema(String lex){
-        this.lexema = lex;
+        this.lexema.setLexema(lex);
     }
     
     public void setTipo(int tipo){
-        this.tipo = tipo;
+        this.lexema.setTipo(tipo);
     }
     
     public void setClasse(String classe){
-        this.classe = classe;
+        this.lexema.setClasse(classe);
     }
     
     //Fim set
@@ -53,11 +59,9 @@ public class Atributos {
         
     }
     
-    public Atributos(String variavel, String lexema, int tipo, String classe){
+    public Atributos(String variavel, Lexema lexema){
         this.variavel = variavel;
         this.lexema = lexema;
-        this.tipo = tipo;
-        this.classe = classe;
     }
     
     

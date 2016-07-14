@@ -157,6 +157,20 @@ public class AnalisadorSintatico {
     public int estado = 0;
     public int error = 0;
     
+    public boolean idDeclarado(String id){
+        if(TabelaSimbolos.simbolos.containsKey(id)){
+            if(TabelaSimbolos.simbolos.get(id).getTipo() != 0){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            System.out.println("Variavel inexistente: "+id+".\nTerminando execução do compilador.");
+            System.exit(0);
+        }
+        return false;
+    }
+    
     public int mapeiaToken(int token){//Mapeia token de acordo com a coluna da tabela
         //if (Main.getC() == -1) return 21;
         if(token == AnalisadorLexico.tokenInicio)
@@ -194,8 +208,7 @@ public class AnalisadorSintatico {
             return 15;
         if(token == AnalisadorLexico.tokenMenor || token == AnalisadorLexico.tokenMenorIgual 
                 || token == AnalisadorLexico.tokenDiferente || token == AnalisadorLexico.tokenMaior 
-                || token == AnalisadorLexico.tokenMaiorIgual || token == AnalisadorLexico.tokenIgual 
-                || token == AnalisadorLexico.tokenOPRIgual)
+                || token == AnalisadorLexico.tokenMaiorIgual || token == AnalisadorLexico.tokenIgual)
             return 16;
         if(token == AnalisadorLexico.tokenSe)
             return 17;
@@ -234,10 +247,11 @@ public class AnalisadorSintatico {
             
             switch(acao){
                 case s:
+                    //System.out.println("estado no topo: " + estado);
                     pilha.push(mapeiaToken(token.getToken()));
-                    atributos.push(new Atributos(token.getStringToken(),token.getLexema(),token.getIntTipo(token.getStringTipo()),token.getClasse()));
-                    //                          Terminal ou ñ terminal,   lexema,            tipo,               classe
-                    System.out.println("\033[0;1m"+"empilhei o token " + token.getStringToken() + ", " + token.getLexema() + ", " + token.getIntTipo() );
+                    atributos.push(new Atributos(token.getStringToken(),  token));
+                    //                          Terminal ou ñ terminal,   atributos
+                    System.out.println("empilhei o token " + token.getStringToken() + " q e " + token.getLexema() );
                     estado = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
 
                     pilha.push(estado);
@@ -299,20 +313,24 @@ public class AnalisadorSintatico {
                 atributos.pop(); // remove ;
                 aux = atributos.pop();// TIPO
                 aux2 =atributos.pop(); //id
+                if(idDeclarado(aux2.getLexema())){
+                   System.out.println("Variável já declarada anteriormente! Variável: " + aux2.getLexema() + "\nSegunda tentativa de declaração na linha " + aux2.getLinha());
+                   System.exit(0);
+                }
                 aux2.setTipo(aux.getTipo());
                 lex = TabelaSimbolos.simbolos.get(aux2.getLexema());
                 lex.setTipo(aux2.getTipo());
                 TabelaSimbolos.simbolos.put(lex.getLexema(),lex);
+                System.out.println("Tipo: "+lex.getTipo());
                 programaGerado += lex.getStringTipo() + " " + lex.getLexema() + ";\n";
-                
                 
                 break;
                 
                 
             case 7:        case 8:          case 9:
-                aux = atributos.pop();          
-                aux.setVariavel("TIPO");
-                atributos.push(aux);
+                System.out.println("\n\n"+atributos.peek().getTipo()+"\n\n");
+                atributos.peek().setVariavel("TIPO");
+               
                 
                 break;
                 
