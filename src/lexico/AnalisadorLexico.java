@@ -564,11 +564,12 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                             this.concatenarLexema(numeroLexemas, c);
                             coluna += 1;
                     }else{
-                       
+                       this.getLexema().setToken(this.mapaEstado(estado));
+                       this.setTipo(numeroLexemas, this.mapaTipo());
                         if(!hasSimbolo(this.getLexema())){                      //se o ID não existe
                             
-                            this.getLexema().setToken(this.mapaEstado(estado)); //this.mapaEstado(16) = tokenId ou palavra reservada
-                            this.setTipo(numeroLexemas, this.mapaTipo());
+                             //this.mapaEstado(16) = tokenId ou palavra reservada
+                            
                             this.addSimbolo(this.getLexema());
                             
                         }else{                                                  //se o ID existe
