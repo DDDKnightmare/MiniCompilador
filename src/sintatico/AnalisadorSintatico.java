@@ -297,12 +297,12 @@ public class AnalisadorSintatico {
                 programaGerado += "\n\n\n";
                 break;
             case 6:
-                atributos.pop(); // tira ; fica id TIPO
-                aux = atributos.pop();// tira TIPO fica id
-                atributos.peek().setTipo(aux.getTipo());
-                System.out.println("\nlexema "+ atributos.peek().getLexema());
-                lex = TabelaSimbolos.simbolos.get(atributos.peek().getLexema());
-                lex.setTipo(atributos.peek().getTipo());
+                atributos.pop(); // remove ;
+                aux = atributos.pop();// TIPO
+                aux2 =atributos.pop(); //id
+                aux2.setTipo(aux.getTipo());
+                lex = TabelaSimbolos.simbolos.get(aux2.getLexema());
+                lex.setTipo(aux2.getTipo());
                 TabelaSimbolos.simbolos.put(lex.getLexema(),lex);
                 programaGerado += lex.getStringTipo() + " " + lex.getLexema() + ";\n";
                 
