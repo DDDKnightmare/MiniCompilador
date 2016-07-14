@@ -874,7 +874,7 @@ public int mapaTipo(){
         case 31: 
             return tipoPontoVirgula;
         case 32: 
-            return tokenMaiorIgual;
+            return tipoMaiorIgual;
         default:
             return 0;
     }
