@@ -67,8 +67,12 @@ public class Lexema {
                 return AnalisadorLexico.tipoMenor;
             case "<=":
                 return AnalisadorLexico.tipoMenorIgual;
+            case "=":
+                return AnalisadorLexico.tipoRCB;
+            case "==":
+                return AnalisadorLexico.tipoIgual;
             default:
-                return -1;
+                return 0;
         }
     }
     
