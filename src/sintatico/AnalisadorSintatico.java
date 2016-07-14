@@ -239,6 +239,7 @@ public class AnalisadorSintatico {
                     atributos.push(new Atributos(token.getStringToken(),token.getLexema(),token.getIntTipo(token.getStringTipo()),token.getClasse()));
                     //                          Terminal ou ñ terminal,   lexema,            tipo,               classe
                     System.out.println("empilhei o token " + token.getStringToken() + " q e " + token.getLexema() );
+                    System.out.println("\nstring classe " + token.getClasse() );
                     estado = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
 
                     pilha.push(estado);
@@ -298,12 +299,15 @@ public class AnalisadorSintatico {
                 break;
             case 6:
                 atributos.pop(); // tira ; fica id TIPO
+                atributos.pop();
                 aux = atributos.pop();
                 atributos.firstElement().setTipo(aux.getTipo());
+                System.out.println("lexema " + aux.getLexema());
                 lex = TabelaSimbolos.simbolos.get(aux.getLexema());
                 lex.setTipo(aux.getTipo());
                 TabelaSimbolos.simbolos.put(lex.getLexema(),lex);
-                System.out.println("tipo " + lex.getTipo());
+                programaGerado += lex.getStringTipo() + " " + lex.getLexema() + ";\n";
+                
                 break;
                 
                 
