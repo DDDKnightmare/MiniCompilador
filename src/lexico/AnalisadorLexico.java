@@ -568,6 +568,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                         if(!hasSimbolo(this.getLexema())){                      //se o ID não existe
                             
                             this.getLexema().setToken(this.mapaEstado(estado)); //this.mapaEstado(16) = tokenId ou palavra reservada
+                            this.setTipo(numeroLexemas, this.mapaTipo());
                             this.addSimbolo(this.getLexema());
                             
                         }else{                                                  //se o ID existe
@@ -647,6 +648,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                             coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));  //this.mapaEstado(20) = tokenMenor
+                        this.setTipo(numeroLexemas, this.mapaTipo());
                         this.setLinha(linha);
                         numeroLexemas += 1;
                     }
@@ -658,6 +660,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                         coluna += 1;
                     }else{
                         this.setToken(numeroLexemas, this.mapaEstado(estado));  //this.mapaEstado(24) = tokenMaior
+                        this.setTipo(numeroLexemas, this.mapaTipo());
                         this.setLinha(linha);
                         numeroLexemas += 1;
                     }
@@ -670,6 +673,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                 case 26:    case 27:    case 28:    case 29:    
                 case 30:    case 31:    case 32:    case 33:
                     this.setToken(numeroLexemas, this.mapaEstado(estado));
+                    this.setTipo(numeroLexemas, this.mapaTipo());
                     this.setLinha(linha);
                     numeroLexemas += 1;
                     break;
