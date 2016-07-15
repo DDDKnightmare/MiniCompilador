@@ -27,6 +27,14 @@ public class Atributos {
         return lexema.getStringTipo();
     }
     
+    public int getToken(){
+        return lexema.getToken();
+    }
+    
+    public String getStringToken(){
+        return lexema.getStringToken();
+    }
+    
     public int getTipo(){
         return lexema.getTipo();
     }

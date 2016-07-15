@@ -11,10 +11,10 @@ import static lexico.AnalisadorLexico.*;
 public class AnalisadorSintatico {
     
     private String programaGerado = "";
+    private String atribuicoes = "";
+    private String temporarias = "";
     
     
-    
-    Stack<String> variaveis = new Stack<String>();
     
     int numVar = 0;
     
@@ -233,7 +233,7 @@ public class AnalisadorSintatico {
         
         pilha.push(estado);
         Lexema token = Main.obterLexemas();
-        System.out.println("token lido: " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo());
+        System.out.println("token lido: " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo() +" (" + token.getStringTipo()+")");
         //while (error == -1 || (token.getToken() != AnalisadorLexico.tokenFim && token.getLexema() != "fim") ){
         while (true){  
             
@@ -252,7 +252,7 @@ public class AnalisadorSintatico {
                     pilha.push(mapeiaToken(token.getToken()));
                     atributos.push(new Atributos(token.getStringToken(),  token));
                     //                          Terminal ou ñ terminal,   atributos
-                    System.out.println("empilhei o token " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo() );
+                    System.out.println("empilhei o token " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo() +" (" + token.getStringTipo()+")");
                     estado = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
 
                     pilha.push(estado);
@@ -286,7 +286,7 @@ public class AnalisadorSintatico {
                 case acc:
 //                    System.out.println(pilha.toString());
 //                    System.out.println("Aceitooooooo Uhuuuuuuuuuuuuuuuu!");
-                      System.out.println(programaGerado);
+                      System.out.println("\n" + temporarias + atribuicoes + programaGerado);
                     return;
 
 
@@ -307,13 +307,15 @@ public class AnalisadorSintatico {
         Lexema lex;
         String exp;
         switch (numeroProducao){
-            case 5: 
-                programaGerado += "\n\n\n";
+            
+            case 5:                             //LV -> varfim;
+                atribuicoes += "\n\n\n";
                 break;
-            case 6:
+            
+            case 6:                             //D -> id TIPO;
                 atributos.pop(); // remove ;
                 aux = atributos.pop();// TIPO
-                aux2 =atributos.pop(); //id
+                aux2 = atributos.pop(); //id
                 if(idDeclarado(aux2.getLexema())){
                    System.out.println("Variável já declarada anteriormente! Variável: " + aux2.getLexema() + "\nSegunda tentativa de declaração na linha " + aux2.getLinha());
                    System.exit(0);
@@ -322,14 +324,14 @@ public class AnalisadorSintatico {
                 lex = TabelaSimbolos.simbolos.get(aux2.getLexema());
                 lex.setTipo(aux2.getTipo());
                 TabelaSimbolos.simbolos.put(lex.getLexema(),lex);
-                System.out.println("Tipo: "+lex.getTipo());
-                programaGerado += lex.getStringTipo() + " " + lex.getLexema() + ";\n";
+//                System.out.println("Tipo: "+lex.getTipo());
+                atribuicoes += lex.getStringTipo() + " " + lex.getLexema() + ";\n";
                 
                 break;
                 
                 
-            case 7:        case 8:          case 9:
-                System.out.println("\n\n"+atributos.peek().getTipo()+"\n\n");
+            case 7:        case 8:          case 9:                 //TIPO ->  id | int | lit
+//                System.out.println("\n\n"+atributos.peek().getStringTipo()+"\n\n");
                 atributos.peek().setVariavel("TIPO");
                
                 
@@ -337,121 +339,135 @@ public class AnalisadorSintatico {
                 
            
                 
-            case 11:
-                break;
-                
-            case 12:
-                break;
-                
-            case 13:        case 14:
+            case 11:                                           // ES -> leia id;
+                atributos.pop(); // remove ;
                 aux = atributos.pop();
-                aux.setVariavel("ARG");
-                atributos.push(aux);
+                if(!idDeclarado(aux.getLexema())){
+                    System.out.println("Erro: Variável não declarada");
+                    System.exit(0);
+                }
+                if(aux.getStringTipo() == "literal"){
+                    programaGerado += "scanf(\"%s\", " + aux.getLexema() + ");\n";
+                    atributos.pop();// remove leia ;
+                    break;
+                }
+                if(aux.getStringTipo() == "int"){
+                    programaGerado += "scanf(\"%d\", " + aux.getLexema() + ");\n";
+                    atributos.pop();// remove leia ;
+                    break;
+                }
+                if(aux.getStringTipo() == "double"){
+                    programaGerado += "scanf(\"%lf\", " + aux.getLexema() + ");\n";
+                    atributos.pop();// remove leia ;
+                    break;
+                }
+                System.out.println("Variável com tipo não permitido!!!");
+                System.exit(0);
+                
+                
+            case 12:            // ES -> escreva ARG;
+                atributos.pop();    // remove ;
+                aux = atributos.pop(); // id
+                programaGerado += "printf(\"" + aux.getLexema() + "\");\n";
+                atributos.pop();    // remove escreva
                 break;
                 
-            case 15:
-                aux = atributos.pop();
-                if(TabelaSimbolos.simbolos.containsKey(aux.getLexema())     &&
-                   TabelaSimbolos.simbolos.get(aux.getLexema()).getTipo() != 0)
-                    aux.setVariavel("ARG");
-                else 
+            case 13:        case 14:            // ARG -> literal  | ARG -> num
+                atributos.peek().setVariavel("ARG"); // literal | num
+                break;
+                
+            case 15:                // ARG -> id
+                aux = atributos.pop();      // id
+                if(idDeclarado(aux.getLexema())){
+                    
+                    atributos.peek().setVariavel("ARG");
+                    
+                }else{ 
                     System.out.println("Erro: Variável não declarada!");
-                    ErroSemantico(token);
+                    System.exit(0);
+                }
                 break;
                 
-            case 17:
-                exp = atributos.pop().getLexema();// ;
+            case 17:                    // CMD -> id rcb LD;
+                atributos.pop(); // remove ;
                 aux2 = atributos.pop();// LD
                 aux = atributos.pop(); // rcb
-                if((TabelaSimbolos.simbolos.get(atributos.peek().getLexema())) == null ||
-                    (TabelaSimbolos.simbolos.get(atributos.peek().getLexema())).getTipo() == 0){
-                    
+                if(!idDeclarado(atributos.peek().getLexema())){
+                    System.out.println("Erro: Variável não declarada!");
+                    System.exit(0);
                 }
                 if(atributos.peek().getTipo() == aux2.getTipo()){
-                    exp = atributos.peek().getLexema() + " " + aux.getLexema() + " " + aux2.getLexema() + ";";
+                    exp = atributos.pop().getLexema() + " " + aux.getStringTipo() + " " + aux2.getLexema() + ";\n";
                     programaGerado += exp;
                     
                 }else{
                     System.out.println("Erro: Operandos com tipos incompatíveis!");
-                    ErroSemantico(token);
+                    System.exit(0);
                 }
                 
                 break;
                 
-            case 18:
-               /* aux = atributos.pop(); //OPRD 2
-                aux2 = atributos.pop();// opm
-                if(TabelaSimbolos.simbolos.containsKey(aux.getLexema())     &&
-                   TabelaSimbolos.simbolos.get(aux.getLexema()).getTipo() != 0  &&
-                   TabelaSimbolos.simbolos.containsKey((atributos.peek()).getLexema())     &&
-                   TabelaSimbolos.simbolos.get((atributos.peek()).getLexema()).getTipo() != 0  &&
-                   aux.getTipo() == atributos.peek().getTipo()      &&
-                   aux.getTipo() != "LITERAL"                       &&
-                   atributos.peek().getTipo() != "LITERAL"){
-                    exp = aux2.getLexema() + " " + aux.getLexema();
-                    aux = atributos.pop();
-                    exp = aux.getLexema() + " " + exp;
-                    aux.setLexema("T"+Integer.toString(numVar));
-                    programaGerado += aux.getLexema() + " = " + exp;
-                    aux.setVariavel("EXP_R");
-                    variaveis.push(aux.getLexema());
-                    atributos.push(aux);
-                    numVar++;
+            case 18:                    //LD -> OPRD opm OPRD
+                aux = atributos.pop();  // OPRD  2
+                aux2 = atributos.pop(); // opm
+                if(aux.getTipo() == atributos.peek().getTipo()){
+                    if(aux.getStringTipo() != "literal"){
+                        TabelaSimbolos.simbolos.put("T"+numVar,new Lexema("T"+numVar, atributos.peek().getToken(), atributos.peek().getTipo(), "IDENTIFICADOR"));
+                        programaGerado += "T" + numVar + " = " + aux.getLexema() + " " + aux2.getStringTipo() + " " + atributos.peek().getLexema()+";\n";
+                        atributos.peek().setVariavel("LD");
+                        atributos.peek().setLexema("T"+numVar);
+                        temporarias += atributos.peek().getStringTipo() + " T"+numVar+";\n";
+                        numVar++;
+                    }else{
+                        System.out.println("Erro: Operandos com tipos incompatíveis!");
+                        System.exit(0);
+                    }
+                    
+                    
                 }else{
                     System.out.println("Erro: Operandos com tipos incompatíveis!");
-                    ErroSemantico(token);
+                    System.exit(0);
                 }
+               
                 break;
-                */
-            case 19:
-                aux = atributos.pop();
-                aux.setVariavel("LD");
-                atributos.push(aux);
+            case 19:                        // LD -> OPRD
+                atributos.peek().setVariavel("LD");
                 break;
                 
-            case 20:
-                aux = atributos.pop();
-                if(TabelaSimbolos.simbolos.containsKey(aux.getLexema())     &&
-                   TabelaSimbolos.simbolos.get(aux.getLexema()).getTipo() != 0){
-                    aux.setVariavel("OPRD");
-                }
-                else
+            case 20:                        // OPRD -> id 
+                aux = atributos.peek();      
+                if(idDeclarado(aux.getLexema())){
+                    atributos.peek().setVariavel("OPRD");
+                }else
                     System.out.println("Erro: Variável nao declarada!");
                     ErroSemantico(token);
                 break;
                 
-            case 21:
-                aux = atributos.pop();
-                aux.setVariavel("OPRD");
-                atributos.push(aux);
+            case 21:                        // OPRD -> num
+                atributos.peek().setVariavel("OPRD");
                 break;
                 
-            case 23:
-                programaGerado += "}";
+            case 23:                        // COND -> CABECALHO CORPO
+                programaGerado += "}\n";
                 break;
                 
-            case 24:
-                atributos.remove(atributos.size() - 4);
-                atributos.remove(atributos.size() - 2);
-                programaGerado += "if(" + atributos.get(atributos.size() - 2).getLexema() + "){";
+            case 24:                        // CABECALHO -> se (EXP_R) entao
+                atributos.pop();    // remove entao
+                atributos.pop();    // remove )
+                aux = atributos.pop();  // EXP_R
+                atributos.pop();    // remove (
+                atributos.pop();    // remove se
+                programaGerado += "if(" + aux.getLexema() + "){\n";
                 break;
                 
-            case 25:
-                aux = atributos.pop(); //OPRD 2
-                aux2 = atributos.pop();// opr
-                if(aux.getTipo() == atributos.peek().getTipo()){
-                    exp = aux2.getLexema() + " " + aux.getLexema();
-                    aux = atributos.pop();
-                    exp = aux.getLexema() + " " + exp;
-                    aux.setLexema("T"+Integer.toString(numVar));
-                    programaGerado += aux.getLexema() + " = " + exp;
-                    aux.setVariavel("EXP_R");
-                    variaveis.push(aux.getLexema());
-                    atributos.push(aux);
-                    numVar++;
-                }else{
-                    System.out.println("Erro: Operandos com tipos incompatíveis!");
-                    ErroSemantico(token);
+            case 25:                        // EXP_R -> OPRD opr OPRD
+                aux2 = atributos.pop();     //OPRD 2
+                aux = atributos.pop();      //opr
+                switch(aux2.getStringTipo()){
+                    case "literal":
+                        if(atributos.peek().getStringTipo() == "literal"){
+                            
+                        }
                 }
                 
                 

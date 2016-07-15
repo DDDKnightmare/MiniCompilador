@@ -822,7 +822,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
             
     }
     //System.out.println("\n");
-    System.out.println("TOKEN LIDO: [" + lexemas.get(lexemas.size()-1).getLexema() + " , tipo: " + lexemas.get(lexemas.size()-1).getTipo()+" ]\n\n");
+//    System.out.println("TOKEN LIDO: [" + lexemas.get(lexemas.size()-1).getLexema() + " , tipo: " + lexemas.get(lexemas.size()-1).getTipo()+" , "+lexemas.get(lexemas.size()-1).getStringTipo()+" ]");
     return lexemas.get(lexemas.size()-1);
 }
 

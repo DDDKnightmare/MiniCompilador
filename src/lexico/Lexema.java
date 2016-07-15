@@ -39,23 +39,23 @@ public class Lexema {
     
 //    public static String getStringTipo(int tipo){
 //        switch(tipo){
-//            case AnalisadorLexico.tipoInteiro                   : return "INTEIRO";
-//            case AnalisadorLexico.tipoLiteral                   : return "LITERAL";
-//            case AnalisadorLexico.tipoReal                      : return "REAL";
+//            case AnalisadorLexico.tipoInteiro                   : return "int";
+//            case AnalisadorLexico.tipoLiteral                   : return "literal";
+//            case AnalisadorLexico.tipoReal                      : return "double";
 //            case AnalisadorLexico.palavraReservadaInteiro       : return "PALAVRA RESERVADA(INTEIRO)";
-//            case AnalisadorLexico.palavraReservadaReal          : return "PALAVRA RESERVADA(REAL)";
-//            case AnalisadorLexico.palavraReservadaLiteral       : return "PALAVRA RESERVADA(LITERAL)";
+//            case AnalisadorLexico.palavraReservadaReal          : return "PALAVRA RESERVADA(double)";
+//            case AnalisadorLexico.palavraReservadaLiteral       : return "PALAVRA RESERVADA(literal)";
 //            default: return "";
 //        }
 //    }
     
     public int getIntTipo(String tipo){
         switch(tipo){
-            case "INTEIRO":
+            case "int":
                 return AnalisadorLexico.tipoInteiro;
-            case "LITERAL":
+            case "literal":
                 return AnalisadorLexico.tipoLiteral;
-            case "REAL":
+            case "double":
                 return AnalisadorLexico.tipoReal;
             case ">":
                 return AnalisadorLexico.tipoMaior;
@@ -79,12 +79,12 @@ public class Lexema {
     
     public String getStringTipo(){
         switch(tipo){
-            case AnalisadorLexico.tipoInteiro                   : return "INTEIRO";
-            case AnalisadorLexico.tipoLiteral                   : return "LITERAL";
-            case AnalisadorLexico.tipoReal                      : return "REAL";
-//            case AnalisadorLexico.palavraReservadaInteiro       : return "INTEIRO";
-//            case AnalisadorLexico.palavraReservadaReal          : return "REAL";
-//            case AnalisadorLexico.palavraReservadaLiteral       : return "LITERAL";
+            case AnalisadorLexico.tipoInteiro                   : return "int";
+            case AnalisadorLexico.tipoLiteral                   : return "literal";
+            case AnalisadorLexico.tipoReal                      : return "double";
+//            case AnalisadorLexico.palavraReservadaInteiro       : return "int";
+//            case AnalisadorLexico.palavraReservadaReal          : return "double";
+//            case AnalisadorLexico.palavraReservadaLiteral       : return "literal";
          // OPR---------------------------------------------------------------------------------------  
             case AnalisadorLexico.tipoMaior                     : return ">";
             case AnalisadorLexico.tipoDiferente                 : return "<>";
@@ -101,6 +101,9 @@ public class Lexema {
             case AnalisadorLexico.tipoRCB                       : return "=";
             case AnalisadorLexico.tipoAbreParenteses            : return "(";
             case AnalisadorLexico.tipoFechaParenteses           : return ")";
+         // -------------------------------------------------------------------------------------------
+            case AnalisadorLexico.tipoPalavraReservada          : return "PALAVRA RESERVADA";
+            case AnalisadorLexico.tipoPontoVirgula              : return ";";
             default: return "";
         }
     }
@@ -139,7 +142,7 @@ public class Lexema {
             case AnalisadorLexico.tokenFechaParenteses:     return "FC_P";
             case AnalisadorLexico.tokenDeclaracao:          return "RCB";
             case AnalisadorLexico.tokenPontoVirgula:        return "PONTO E VIRGULA";
-            case AnalisadorLexico.tokenLiteral:             return "LITERAL";
+            case AnalisadorLexico.tokenLiteral:             return "literal";
 //OPM----------------------------------------------------------------------------
             case AnalisadorLexico.tokenMais:                return "OPM";
             case AnalisadorLexico.tokenMenos:               return "OPM";
@@ -167,9 +170,9 @@ public class Lexema {
             case AnalisadorLexico.tokenVarInicio:                   return "VARINICIO";
             case AnalisadorLexico.tokenVarFim:                      return "VARFIM";
             case AnalisadorLexico.tokenSe:                          return "SE";
-            case AnalisadorLexico.palavraReservadaInteiro:          return "PALAVRA RESERVADA(INTEIRO)";
-            case AnalisadorLexico.palavraReservadaReal:             return "PALAVRA RESERVADA(REAL)";
-            case AnalisadorLexico.palavraReservadaLiteral:          return "PALAVRA RESERVADA(LITERAL)";
+//            case AnalisadorLexico.palavraReservadaInteiro:          return "PALAVRA RESERVADA(INTEIRO)";
+//            case AnalisadorLexico.palavraReservadaReal:             return "PALAVRA RESERVADA(double)";
+//            case AnalisadorLexico.palavraReservadaLiteral:          return "PALAVRA RESERVADA(literal)";
 //FIM ID E PALAVRAS RESRVADAS----------------------------------------------------
             case AnalisadorLexico.tokenCifrao:                      return "CIFRÃO";
             default: return "ERRO";

@@ -17,18 +17,18 @@ public class TabelaSimbolos{
     public static Hashtable<String, Lexema> simbolos = new Hashtable<String, Lexema>();
     
     public static void carregaPalavrasReservadas(){
-        simbolos.put("inicio", new Lexema("inicio", AnalisadorLexico.tokenInicio, 0));
-        simbolos.put("varinicio", new Lexema("varinicio", AnalisadorLexico.tokenVarInicio, 0));
-        simbolos.put("varfim", new Lexema("varfim", AnalisadorLexico.tokenVarFim, 0));
-        simbolos.put("escreva", new Lexema("escreva", AnalisadorLexico.tokenEscreva, 0));
-        simbolos.put("leia", new Lexema("leia", AnalisadorLexico.tokenLeia, 0));
-        simbolos.put("se", new Lexema("se", AnalisadorLexico.tokenSe, 0));
-        simbolos.put("entao", new Lexema("entao", AnalisadorLexico.tokenEntao, 0));
-        simbolos.put("fimse", new Lexema("fimse", AnalisadorLexico.tokenFimSe, 0));
-        simbolos.put("fim", new Lexema("fim", AnalisadorLexico.tokenFim, 0));
-        simbolos.put("inteiro", new Lexema("inteiro", AnalisadorLexico.palavraReservadaInteiro, 0/*AnalisadorLexico.tipoInteiro*/));
-        simbolos.put("real", new Lexema("real", AnalisadorLexico.palavraReservadaReal, 0/*AnalisadorLexico.tipoReal*/));
-        simbolos.put("literal", new Lexema("literal", AnalisadorLexico.palavraReservadaLiteral, 0/*AnalisadorLexico.tipoLiteral*/));
+        simbolos.put("inicio", new Lexema("inicio", AnalisadorLexico.tokenInicio, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("varinicio", new Lexema("varinicio", AnalisadorLexico.tokenVarInicio, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("varfim", new Lexema("varfim", AnalisadorLexico.tokenVarFim, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("escreva", new Lexema("escreva", AnalisadorLexico.tokenEscreva, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("leia", new Lexema("leia", AnalisadorLexico.tokenLeia, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("se", new Lexema("se", AnalisadorLexico.tokenSe, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("entao", new Lexema("entao", AnalisadorLexico.tokenEntao, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("fimse", new Lexema("fimse", AnalisadorLexico.tokenFimSe, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("fim", new Lexema("fim", AnalisadorLexico.tokenFim, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("inteiro", new Lexema("inteiro", AnalisadorLexico.palavraReservadaInteiro, AnalisadorLexico.tipoInteiro));
+        simbolos.put("real", new Lexema("real", AnalisadorLexico.palavraReservadaReal, AnalisadorLexico.tipoReal));
+        simbolos.put("literal", new Lexema("literal", AnalisadorLexico.palavraReservadaLiteral, AnalisadorLexico.tipoLiteral));
     }
     
     public static Lexema getSimbolo(String key){
