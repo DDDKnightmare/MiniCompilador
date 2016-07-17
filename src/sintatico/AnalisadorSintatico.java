@@ -469,8 +469,9 @@ public class AnalisadorSintatico {
                             lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenLiteral, AnalisadorLexico.tipoBoolean, "literal");
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
+                            programaGerado += "T"+numVar + " = " + atributos.peek().getLexema() + " " + aux.getStringTipo() + " " + aux2.getLexema() + ";\n";
                             atributos.peek().setLexema("T"+numVar);
-                            temporarias += aux.getStringTipo() + " T"+numVar + ";\n";
+                            temporarias += "boolean" + " T"+numVar + ";\n";
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
@@ -483,8 +484,9 @@ public class AnalisadorSintatico {
                             lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoBoolean, "num");
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
+                            programaGerado += "T"+numVar + " = " + atributos.peek().getLexema() + " " + aux.getStringTipo() + " " + aux2.getLexema() + ";\n";
                             atributos.peek().setLexema("T"+numVar);
-                            temporarias += atributos.peek().getStringTipo() + " T"+numVar + ";\n";
+                            temporarias += "boolean" + " T"+numVar + ";\n";
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
@@ -498,7 +500,7 @@ public class AnalisadorSintatico {
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
                             atributos.peek().setLexema("T"+numVar);
-                            temporarias += atributos.peek().getStringTipo() + " T"+numVar + ";\n";
+                            temporarias += "boolean" + " T"+numVar + ";\n";
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
