@@ -341,23 +341,23 @@ public class AnalisadorSintatico {
                 
             case 11:                                           // ES -> leia id;
                 atributos.pop(); // remove ;
-                aux = atributos.pop();
+                aux = atributos.pop();     // id
                 if(!idDeclarado(aux.getLexema())){
                     System.out.println("Erro: Variável não declarada");
                     System.exit(0);
                 }
                 if(aux.getStringTipo() == "literal"){
-                    programaGerado += "scanf(\"%s\", " + aux.getLexema() + ");\n";
+                    programaGerado += "scanf(\"%s\", &" + aux.getLexema() + ");\n";
                     atributos.pop();// remove leia ;
                     break;
                 }
                 if(aux.getStringTipo() == "int"){
-                    programaGerado += "scanf(\"%d\", " + aux.getLexema() + ");\n";
+                    programaGerado += "scanf(\"%d\", &" + aux.getLexema() + ");\n";
                     atributos.pop();// remove leia ;
                     break;
                 }
                 if(aux.getStringTipo() == "double"){
-                    programaGerado += "scanf(\"%lf\", " + aux.getLexema() + ");\n";
+                    programaGerado += "scanf(\"%lf\", &" + aux.getLexema() + ");\n";
                     atributos.pop();// remove leia ;
                     break;
                 }
@@ -367,8 +367,8 @@ public class AnalisadorSintatico {
                 
             case 12:            // ES -> escreva ARG;
                 atributos.pop();    // remove ;
-                aux = atributos.pop(); // id
-                programaGerado += "printf(\"" + aux.getLexema() + "\");\n";
+                aux = atributos.pop(); // ARG
+                programaGerado += "printf(" + aux.getLexema() + ");\n";
                 atributos.pop();    // remove escreva
                 break;
                 
@@ -379,8 +379,8 @@ public class AnalisadorSintatico {
             case 15:                // ARG -> id
                 aux = atributos.pop();      // id
                 if(idDeclarado(aux.getLexema())){
-                    
-                    atributos.peek().setVariavel("ARG");
+                    aux.setVariavel("ARG");
+                    atributos.push(aux);
                     
                 }else{ 
                     System.out.println("Erro: Variável não declarada!");
@@ -466,8 +466,46 @@ public class AnalisadorSintatico {
                 switch(aux2.getStringTipo()){
                     case "literal":
                         if(atributos.peek().getStringTipo() == "literal"){
-                            
+                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenLiteral, AnalisadorLexico.tipoBoolean, "literal");
+                            TabelaSimbolos.simbolos.put("T"+numVar, lex);
+                            atributos.peek().setVariavel("EXP_R");
+                            atributos.peek().setLexema("T"+numVar);
+                            temporarias += aux.getStringTipo() + " T"+numVar + ";\n";
+                            numVar++;
+                        }else{
+                            System.out.println("Erro: Tipos incompatíveis!");
+                            System.exit(0);
                         }
+                        break;
+                    
+                    case "int":
+                        if(atributos.peek().getStringTipo() == "int" || atributos.peek().getStringTipo() == "double"){
+                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoBoolean, "num");
+                            TabelaSimbolos.simbolos.put("T"+numVar, lex);
+                            atributos.peek().setVariavel("EXP_R");
+                            atributos.peek().setLexema("T"+numVar);
+                            temporarias += atributos.peek().getStringTipo() + " T"+numVar + ";\n";
+                            numVar++;
+                        }else{
+                            System.out.println("Erro: Tipos incompatíveis!");
+                            System.exit(0);
+                        }
+                        break;
+                        
+                    case "double":
+                        if(atributos.peek().getStringTipo() == "int" || atributos.peek().getStringTipo() == "double"){
+                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoBoolean, "num");
+                            TabelaSimbolos.simbolos.put("T"+numVar, lex);
+                            atributos.peek().setVariavel("EXP_R");
+                            atributos.peek().setLexema("T"+numVar);
+                            temporarias += atributos.peek().getStringTipo() + " T"+numVar + ";\n";
+                            numVar++;
+                        }else{
+                            System.out.println("Erro: Tipos incompatíveis!");
+                            System.exit(0);
+                        }
+                        break;
+                        
                 }
                 
                 

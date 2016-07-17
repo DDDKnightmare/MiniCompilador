@@ -72,6 +72,7 @@ public static final int tipoIgual = 67;
 public static final int tipoPalavraReservada = 68;
 public static final int tipoAbreParenteses = 69;
 public static final int tipoFechaParenteses = 70;
+public static final int tipoBoolean = 71;
 //FimTipos-------------------------------------------
 //public static final int tokenComentario = 500;
 //FimTokens-------------------------------------------
