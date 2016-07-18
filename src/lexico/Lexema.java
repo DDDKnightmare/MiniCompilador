@@ -104,7 +104,7 @@ public class Lexema {
          // -------------------------------------------------------------------------------------------
             case AnalisadorLexico.tipoPalavraReservada          : return "PALAVRA RESERVADA";
             case AnalisadorLexico.tipoPontoVirgula              : return ";";
-            case AnalisadorLexico.tipoBoolean                   : return "boolean";
+            
             default: return "";
         }
     }

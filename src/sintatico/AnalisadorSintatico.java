@@ -243,7 +243,7 @@ public class AnalisadorSintatico {
         }
         fw = new FileWriter(new File(salvarComo));
         writer = new PrintWriter(fw);
-        cabecalho += "#include<stdio.h>" + System.getProperty("line.separator")+ "typedef char literal[256];" + System.getProperty("line.separator")+ "" +"void main(void)" + System.getProperty("line.separator")+ "" +"{" + System.getProperty("line.separator");
+        cabecalho += "#include<stdio.h>" + System.getProperty("line.separator")+ System.getProperty("line.separator") + "typedef char literal[256];" + System.getProperty("line.separator")+ "" +"void main(void)"+"{" + System.getProperty("line.separator");
     
     }
     
@@ -307,9 +307,7 @@ public class AnalisadorSintatico {
                       escreveArquivo();
                       cabecalho += temporarias + atribuicoes;
                       int tamanho = cabecalho.length();
-                      for(int i = 0; i < tamanho; i++){
-                          
-                      }
+                      
                       writer.println(cabecalho);
                       writer.println(programaGerado);
                       writer.close();
@@ -502,13 +500,13 @@ public class AnalisadorSintatico {
                 switch(aux2.getStringTipo()){
                     case "literal":
                         if(atributos.peek().getStringTipo() == "literal"){
-                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenLiteral, AnalisadorLexico.tipoBoolean, "literal");
+                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenLiteral, AnalisadorLexico.tipoInteiro, "num");
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
                             espacos();
                             programaGerado += "T"+numVar + " = " + atributos.peek().getLexema() + " " + aux.getStringTipo() + " " + aux2.getLexema() + ";" + System.getProperty("line.separator");
                             atributos.peek().setLexema("T"+numVar);
-                            temporarias += "boolean" + " T"+numVar + ";" + System.getProperty("line.separator");
+                            temporarias += "int" + " T"+numVar + ";" + System.getProperty("line.separator");
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
@@ -518,13 +516,13 @@ public class AnalisadorSintatico {
                     
                     case "int":
                         if(atributos.peek().getStringTipo() == "int" || atributos.peek().getStringTipo() == "double"){
-                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoBoolean, "num");
+                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoInteiro, "num");
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
                             espacos();
                             programaGerado += "T"+numVar + " = " + atributos.peek().getLexema() + " " + aux.getStringTipo() + " " + aux2.getLexema() + ";" + System.getProperty("line.separator");
                             atributos.peek().setLexema("T"+numVar);
-                            temporarias += "boolean" + " T"+numVar + ";" + System.getProperty("line.separator");
+                            temporarias += "int" + " T"+numVar + ";" + System.getProperty("line.separator");
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
@@ -534,11 +532,11 @@ public class AnalisadorSintatico {
                         
                     case "double":
                         if(atributos.peek().getStringTipo() == "int" || atributos.peek().getStringTipo() == "double"){
-                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoBoolean, "num");
+                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoInteiro, "num");
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
                             atributos.peek().setLexema("T"+numVar);
-                            temporarias += "boolean" + " T"+numVar + ";" + System.getProperty("line.separator");
+                            temporarias += "int" + " T"+numVar + ";" + System.getProperty("line.separator");
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
