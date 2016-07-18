@@ -21,15 +21,28 @@ import java.io.*;
 public class SelecaoArquivo extends JComponent implements Accessible {
     public JFileChooser escolheArquivo;
     final FileNameExtensionFilter formatoArquivo = new FileNameExtensionFilter("Arquivos .ALG","ALG");// filtro para arquivos ALG
-    
+    final FileNameExtensionFilter _C = new FileNameExtensionFilter("Arquivo .c","c");
     public SelecaoArquivo(){
         escolheArquivo = new JFileChooser();
         escolheArquivo.setFileFilter(formatoArquivo);
     }
     
+    public SelecaoArquivo(int a){
+        escolheArquivo = new JFileChooser();
+        escolheArquivo.setFileFilter(_C);
+    }
+    
     public File retornaArquivo(){
         int returnVal = escolheArquivo.showOpenDialog(this);
         if(returnVal == JFileChooser.APPROVE_OPTION){//botao "open" foi clicado
+            return escolheArquivo.getSelectedFile();
+        }else System.exit(0);
+         return null;// botao cancel foi clicado, para a execucao
+    }
+    
+    public File salvarArquivo(){
+        int returnVal = escolheArquivo.showSaveDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION){//botao "save" foi clicado
             return escolheArquivo.getSelectedFile();
         }else System.exit(0);
          return null;// botao cancel foi clicado, para a execucao

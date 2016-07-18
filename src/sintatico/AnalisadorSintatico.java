@@ -10,11 +10,11 @@ import static lexico.AnalisadorLexico.*;
  */
 public class AnalisadorSintatico {
     
-    private String programaGerado = "";
+    private String programaGerado = "/*--------------------------------------------------*/" + System.getProperty("line.separator");
     private String cabecalho = "";
-    private String atribuicoes = "";
-    private String temporarias = "";
-    
+    private String atribuicoes = "/*Declaração  de variáveis------------------------------*/" + System.getProperty("line.separator");
+    private String temporarias = "/*Variáveis temporárias---------------------------------*/" + System.getProperty("line.separator");
+    private int numIf = 1;
     
     
     int numVar = 0;
@@ -28,9 +28,13 @@ public class AnalisadorSintatico {
         "  do tipo: " + token.getStringTipo());
     }
     
+    private void espacos(){
+        for(int i =0; i<numIf; i++){
+            programaGerado+="    ";
+        }
+    }
     
     
-    private String impressaoSemantico;
     
    
     
@@ -169,7 +173,7 @@ public class AnalisadorSintatico {
                 return false;
             }
         }else{
-            System.out.println("Variavel inexistente: "+id+".\nTerminando execução do compilador.");
+            System.out.println("Variavel inexistente: "+id+"." + System.getProperty("line.separator")+ "Terminando execução do compilador.");
             System.exit(0);
         }
         return false;
@@ -232,10 +236,14 @@ public class AnalisadorSintatico {
     }
     
     public void escreveArquivo() throws FileNotFoundException, IOException{
-   
-        fw = new FileWriter("Fonte.c");
+        SelecaoArquivo arquivo = new SelecaoArquivo(0);
+        String salvarComo = arquivo.salvarArquivo().toString();
+        if (!salvarComo .endsWith(".c")){
+            salvarComo += ".c";
+        }
+        fw = new FileWriter(new File(salvarComo));
         writer = new PrintWriter(fw);
-        cabecalho += "#include<stdio.h>\ntypedef char literal[256];\n" +"void main(void)\n" +"{\n";
+        cabecalho += "#include<stdio.h>" + System.getProperty("line.separator")+ "typedef char literal[256];" + System.getProperty("line.separator")+ "" +"void main(void)" + System.getProperty("line.separator")+ "" +"{" + System.getProperty("line.separator");
     
     }
     
@@ -298,12 +306,15 @@ public class AnalisadorSintatico {
                       programaGerado += "}";
                       escreveArquivo();
                       cabecalho += temporarias + atribuicoes;
-                      
-                      writer.print(cabecalho);
-                      writer.print(programaGerado);
+                      int tamanho = cabecalho.length();
+                      for(int i = 0; i < tamanho; i++){
+                          
+                      }
+                      writer.println(cabecalho);
+                      writer.println(programaGerado);
                       writer.close();
                       
-                      System.out.println("\n" + temporarias + atribuicoes + cabecalho +programaGerado);
+                      System.out.println(System.getProperty("line.separator") + cabecalho + programaGerado);
                     return;
 
 
@@ -326,7 +337,7 @@ public class AnalisadorSintatico {
         switch (numeroProducao){
             
             case 5:                             //LV -> varfim;
-                atribuicoes += "\n\n\n";
+                atribuicoes += "/*------------------------------------------------------*/" + System.getProperty("line.separator") + System.getProperty("line.separator") + System.getProperty("line.separator") + System.getProperty("line.separator");
                 break;
             
             case 6:                             //D -> id TIPO;
@@ -334,7 +345,7 @@ public class AnalisadorSintatico {
                 aux = atributos.pop();// TIPO
                 aux2 = atributos.pop(); //id
                 if(idDeclarado(aux2.getLexema())){
-                   System.out.println("Variável já declarada anteriormente! Variável: " + aux2.getLexema() + "\nSegunda tentativa de declaração na linha " + aux2.getLinha());
+                   System.out.println("Variável já declarada anteriormente! Variável: " + aux2.getLexema()  + System.getProperty("line.separator")+ "Segunda tentativa de declaração na linha " + aux2.getLinha());
                    System.exit(0);
                 }
                 aux2.setTipo(aux.getTipo());
@@ -342,7 +353,7 @@ public class AnalisadorSintatico {
                 lex.setTipo(aux2.getTipo());
                 TabelaSimbolos.simbolos.put(lex.getLexema(),lex);
 //                System.out.println("Tipo: "+lex.getTipo());
-                atribuicoes += lex.getStringTipo() + " " + lex.getLexema() + ";\n";
+                atribuicoes += lex.getStringTipo() + " " + lex.getLexema() + ";" + System.getProperty("line.separator");
                 
                 break;
                 
@@ -363,18 +374,19 @@ public class AnalisadorSintatico {
                     System.out.println("Erro: Variável não declarada");
                     System.exit(0);
                 }
+                espacos();
                 if(aux.getStringTipo() == "literal"){
-                    programaGerado += "scanf(\"%s\", &" + aux.getLexema() + ");\n";
+                    programaGerado += "scanf(\"%s\", &" + aux.getLexema() + ");" + System.getProperty("line.separator");
                     atributos.pop();// remove leia ;
                     break;
                 }
                 if(aux.getStringTipo() == "int"){
-                    programaGerado += "scanf(\"%d\", &" + aux.getLexema() + ");\n";
+                    programaGerado += "scanf(\"%d\", &" + aux.getLexema() + ");" + System.getProperty("line.separator");
                     atributos.pop();// remove leia ;
                     break;
                 }
                 if(aux.getStringTipo() == "double"){
-                    programaGerado += "scanf(\"%lf\", &" + aux.getLexema() + ");\n";
+                    programaGerado += "scanf(\"%lf\", &" + aux.getLexema() + ");" + System.getProperty("line.separator");
                     atributos.pop();// remove leia ;
                     break;
                 }
@@ -385,7 +397,8 @@ public class AnalisadorSintatico {
             case 12:            // ES -> escreva ARG;
                 atributos.pop();    // remove ;
                 aux = atributos.pop(); // ARG
-                programaGerado += "printf(" + aux.getLexema() + ");\n";
+                espacos();
+                programaGerado += "printf(" + aux.getLexema() + ");" + System.getProperty("line.separator");
                 atributos.pop();    // remove escreva
                 break;
                 
@@ -414,7 +427,8 @@ public class AnalisadorSintatico {
                     System.exit(0);
                 }
                 if(atributos.peek().getTipo() == aux2.getTipo()){
-                    exp = atributos.pop().getLexema() + " " + aux.getStringTipo() + " " + aux2.getLexema() + ";\n";
+                    exp = atributos.pop().getLexema() + " " + aux.getStringTipo() + " " + aux2.getLexema() + ";" + System.getProperty("line.separator");
+                    espacos();
                     programaGerado += exp;
                     
                 }else{
@@ -430,10 +444,11 @@ public class AnalisadorSintatico {
                 if(aux.getTipo() == atributos.peek().getTipo()){
                     if(aux.getStringTipo() != "literal"){
                         TabelaSimbolos.simbolos.put("T"+numVar,new Lexema("T"+numVar, atributos.peek().getToken(), atributos.peek().getTipo(), "IDENTIFICADOR"));
-                        programaGerado += "T" + numVar + " = " + aux.getLexema() + " " + aux2.getStringTipo() + " " + atributos.peek().getLexema()+";\n";
+                        espacos();
+                        programaGerado += "T" + numVar + " = " + aux.getLexema() + " " + aux2.getStringTipo() + " " + atributos.peek().getLexema()+";" + System.getProperty("line.separator");
                         atributos.peek().setVariavel("LD");
                         atributos.peek().setLexema("T"+numVar);
-                        temporarias += atributos.peek().getStringTipo() + " T"+numVar+";\n";
+                        temporarias += atributos.peek().getStringTipo() + " T"+numVar+";" + System.getProperty("line.separator");
                         numVar++;
                     }else{
                         System.out.println("Erro: Operandos com tipos incompatíveis!");
@@ -465,7 +480,9 @@ public class AnalisadorSintatico {
                 break;
                 
             case 23:                        // COND -> CABECALHO CORPO
-                programaGerado += "}\n";
+                numIf -- ;
+                espacos();
+                programaGerado += "}" + System.getProperty("line.separator");
                 break;
                 
             case 24:                        // CABECALHO -> se (EXP_R) entao
@@ -474,7 +491,9 @@ public class AnalisadorSintatico {
                 aux = atributos.pop();  // EXP_R
                 atributos.pop();    // remove (
                 atributos.pop();    // remove se
-                programaGerado += "if(" + aux.getLexema() + "){\n";
+                espacos();
+                programaGerado += "if(" + aux.getLexema() + "){" + System.getProperty("line.separator");
+                numIf ++ ;
                 break;
                 
             case 25:                        // EXP_R -> OPRD opr OPRD
@@ -486,9 +505,10 @@ public class AnalisadorSintatico {
                             lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenLiteral, AnalisadorLexico.tipoBoolean, "literal");
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
-                            programaGerado += "T"+numVar + " = " + atributos.peek().getLexema() + " " + aux.getStringTipo() + " " + aux2.getLexema() + ";\n";
+                            espacos();
+                            programaGerado += "T"+numVar + " = " + atributos.peek().getLexema() + " " + aux.getStringTipo() + " " + aux2.getLexema() + ";" + System.getProperty("line.separator");
                             atributos.peek().setLexema("T"+numVar);
-                            temporarias += "boolean" + " T"+numVar + ";\n";
+                            temporarias += "boolean" + " T"+numVar + ";" + System.getProperty("line.separator");
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
@@ -501,9 +521,10 @@ public class AnalisadorSintatico {
                             lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoBoolean, "num");
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
-                            programaGerado += "T"+numVar + " = " + atributos.peek().getLexema() + " " + aux.getStringTipo() + " " + aux2.getLexema() + ";\n";
+                            espacos();
+                            programaGerado += "T"+numVar + " = " + atributos.peek().getLexema() + " " + aux.getStringTipo() + " " + aux2.getLexema() + ";" + System.getProperty("line.separator");
                             atributos.peek().setLexema("T"+numVar);
-                            temporarias += "boolean" + " T"+numVar + ";\n";
+                            temporarias += "boolean" + " T"+numVar + ";" + System.getProperty("line.separator");
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
@@ -517,7 +538,7 @@ public class AnalisadorSintatico {
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
                             atributos.peek().setLexema("T"+numVar);
-                            temporarias += "boolean" + " T"+numVar + ";\n";
+                            temporarias += "boolean" + " T"+numVar + ";" + System.getProperty("line.separator");
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
