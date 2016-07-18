@@ -1,7 +1,7 @@
 
 package sintatico;
 import lexico.*;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import static lexico.AnalisadorLexico.*;
 /**
@@ -11,6 +11,7 @@ import static lexico.AnalisadorLexico.*;
 public class AnalisadorSintatico {
     
     private String programaGerado = "";
+    private String cabecalho = "";
     private String atribuicoes = "";
     private String temporarias = "";
     
@@ -157,6 +158,9 @@ public class AnalisadorSintatico {
     public int estado = 0;
     public int error = 0;
     
+    private FileWriter fw ;
+    private PrintWriter writer;
+    
     public boolean idDeclarado(String id){
         if(TabelaSimbolos.simbolos.containsKey(id)){
             if(TabelaSimbolos.simbolos.get(id).getTipo() != 0){
@@ -227,10 +231,16 @@ public class AnalisadorSintatico {
         System.out.println("Erro na linha: " + token.getLinha()+ " com o lexema: " + token.getLexema());
     }
     
+    public void escreveArquivo() throws FileNotFoundException, IOException{
+   
+        fw = new FileWriter("Fonte.c");
+        writer = new PrintWriter(fw);
+        cabecalho += "#include<stdio.h>\ntypedef char literal[256];\n" +"void main(void)\n" +"{\n";
     
+    }
     
     public void analisadorSintatico() throws IOException{
-        
+       
         pilha.push(estado);
         Lexema token = Main.obterLexemas();
         System.out.println("token lido: " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo() +" (" + token.getStringTipo()+")");
@@ -285,8 +295,15 @@ public class AnalisadorSintatico {
 
                 case acc:
 //                    System.out.println(pilha.toString());
-//                    System.out.println("Aceitooooooo Uhuuuuuuuuuuuuuuuu!");
-                      System.out.println("\n" + temporarias + atribuicoes + programaGerado);
+                      programaGerado += "}";
+                      escreveArquivo();
+                      cabecalho += temporarias + atribuicoes;
+                      
+                      writer.print(cabecalho);
+                      writer.print(programaGerado);
+                      writer.close();
+                      
+                      System.out.println("\n" + temporarias + atribuicoes + cabecalho +programaGerado);
                     return;
 
 
