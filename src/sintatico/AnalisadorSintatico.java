@@ -397,22 +397,24 @@ public class AnalisadorSintatico {
                 aux = atributos.pop(); // ARG
                 espacos();
                 programaGerado += "printf(";
-                switch(aux.getStringTipo()){
-                    case "int":
-                        programaGerado += "\"%d\",";
-                        break;
-                        
-                    case "double":
-                        programaGerado += "\"%lf\",";
-                        break;
-                        
-                    case "literal":
-                        programaGerado += "\"%s\",";
-                        break;
-                        
-                    default:
-                        System.out.println("Tipo não definido!!!");
-                        System.exit(0);
+                if(TabelaSimbolos.simbolos.containsKey(aux.getLexema())){
+                    switch(aux.getStringTipo()){
+                        case "int":
+                            programaGerado += "\"%d\",";
+                            break;
+
+                        case "double":
+                            programaGerado += "\"%lf\",";
+                            break;
+
+                        case "literal":
+                            programaGerado += "\"%s\",";
+                            break;
+
+                        default:
+                            System.out.println("Tipo não definido!!!");
+                            System.exit(0);
+                    }
                 }
                 programaGerado += aux.getLexema() + ");" + System.getProperty("line.separator");
                 atributos.pop();    // remove escreva
