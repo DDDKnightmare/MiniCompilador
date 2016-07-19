@@ -171,9 +171,9 @@ public class Lexema {
             case AnalisadorLexico.tokenVarInicio:                   return "VARINICIO";
             case AnalisadorLexico.tokenVarFim:                      return "VARFIM";
             case AnalisadorLexico.tokenSe:                          return "SE";
-//            case AnalisadorLexico.palavraReservadaInteiro:          return "PALAVRA RESERVADA(INTEIRO)";
-//            case AnalisadorLexico.palavraReservadaReal:             return "PALAVRA RESERVADA(double)";
-//            case AnalisadorLexico.palavraReservadaLiteral:          return "PALAVRA RESERVADA(literal)";
+            case AnalisadorLexico.palavraReservadaInteiro:          return "PALAVRA RESERVADA(INTEIRO)";
+            case AnalisadorLexico.palavraReservadaReal:             return "PALAVRA RESERVADA(double)";
+            case AnalisadorLexico.palavraReservadaLiteral:          return "PALAVRA RESERVADA(literal)";
 //FIM ID E PALAVRAS RESRVADAS----------------------------------------------------
             case AnalisadorLexico.tokenCifrao:                      return "CIFRÃO";
             default: return "ERRO";

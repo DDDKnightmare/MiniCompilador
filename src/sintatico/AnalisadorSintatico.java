@@ -251,7 +251,7 @@ public class AnalisadorSintatico {
        
         pilha.push(estado);
         Lexema token = Main.obterLexemas();
-        System.out.println("token lido: " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo() +" (" + token.getStringTipo()+")");
+        //System.out.println("token lido: " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo() +" (" + token.getStringTipo()+")");
         //while (error == -1 || (token.getToken() != AnalisadorLexico.tokenFim && token.getLexema() != "fim") ){
         while (true){  
             
@@ -270,7 +270,7 @@ public class AnalisadorSintatico {
                     pilha.push(mapeiaToken(token.getToken()));
                     atributos.push(new Atributos(token.getStringToken(),  token));
                     //                          Terminal ou ñ terminal,   atributos
-                    System.out.println("empilhei o token " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo() +" (" + token.getStringTipo()+")");
+         //           System.out.println("empilhei o token " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo() +" (" + token.getStringTipo()+")");
                     estado = tabelaSintatica[estado][mapeiaToken(token.getToken())][1];
 
                     pilha.push(estado);
@@ -396,7 +396,25 @@ public class AnalisadorSintatico {
                 atributos.pop();    // remove ;
                 aux = atributos.pop(); // ARG
                 espacos();
-                programaGerado += "printf(" + aux.getLexema() + ");" + System.getProperty("line.separator");
+                programaGerado += "printf(";
+                switch(aux.getStringTipo()){
+                    case "int":
+                        programaGerado += "\"%d\",";
+                        break;
+                        
+                    case "double":
+                        programaGerado += "\"%lf\",";
+                        break;
+                        
+                    case "literal":
+                        programaGerado += "\"%s\",";
+                        break;
+                        
+                    default:
+                        System.out.println("Tipo não definido!!!");
+                        System.exit(0);
+                }
+                programaGerado += aux.getLexema() + ");" + System.getProperty("line.separator");
                 atributos.pop();    // remove escreva
                 break;
                 
@@ -443,7 +461,7 @@ public class AnalisadorSintatico {
                     if(aux.getStringTipo() != "literal"){
                         TabelaSimbolos.simbolos.put("T"+numVar,new Lexema("T"+numVar, atributos.peek().getToken(), atributos.peek().getTipo(), "IDENTIFICADOR"));
                         espacos();
-                        programaGerado += "T" + numVar + " = " + aux.getLexema() + " " + aux2.getStringTipo() + " " + atributos.peek().getLexema()+";" + System.getProperty("line.separator");
+                        programaGerado += "T" + numVar + " = " + atributos.peek().getLexema() + " " + aux2.getStringTipo() + " " + aux.getLexema()+";" + System.getProperty("line.separator");
                         atributos.peek().setVariavel("LD");
                         atributos.peek().setLexema("T"+numVar);
                         temporarias += atributos.peek().getStringTipo() + " T"+numVar+";" + System.getProperty("line.separator");
@@ -468,9 +486,10 @@ public class AnalisadorSintatico {
                 aux = atributos.peek();      
                 if(idDeclarado(aux.getLexema())){
                     atributos.peek().setVariavel("OPRD");
-                }else
+                }else{
                     System.out.println("Erro: Variável nao declarada!");
                     ErroSemantico(token);
+                }
                 break;
                 
             case 21:                        // OPRD -> num
