@@ -22,13 +22,13 @@ public class Main{
         return analisador.getC();
     }
     
-    public static Lexema obterLexemas() throws IOException{
+    public static Token obterLexemas() throws IOException{
         
         return analisador.analisaTexto();
         
     }
     public static void imprimeLexemas() throws IOException{
-        Lexema lexema = obterLexemas();
+        Token lexema = obterLexemas();
         System.out.println('[' + lexema.getLexema() + ", " +
         lexema.getStringToken() + ", " + lexema.getStringTipo()  +  ']');
         

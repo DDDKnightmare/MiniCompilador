@@ -191,15 +191,15 @@ private FileInputStream fonteAlg;
 private InputStreamReader caracter;
 private int estado = 0;
 private int c = 999;
-ArrayList<Lexema> lexemas = new ArrayList<Lexema>();
+ArrayList<Token> lexemas = new ArrayList<Token>();
 
 
 public void setClasse(int indice, String classe){
     lexemas.get(indice).setClasse(classe);
 }
 
-public Lexema[] getArrayLexemas(){
-    return lexemas.toArray(new Lexema[lexemas.size()]);
+public Token[] getArrayLexemas(){
+    return lexemas.toArray(new Token[lexemas.size()]);
 }
 
 public int getNumeroLexemas(){
@@ -210,7 +210,7 @@ public void setLinha(int linha){
     this.getLexema().setLinha(linha);
 }
 
-public Lexema getLexema(){
+public Token getLexema(){
     return lexemas.get(numeroLexemas);
 }
 
@@ -238,7 +238,7 @@ public void concatenarLexema(int indice, char lexema){
     lexemas.get(indice).concatenarLexema((char) lexema);
 }
 
-public boolean hasSimbolo(Lexema key){
+public boolean hasSimbolo(Token key){
     return TabelaSimbolos.hasSimbolo(key);
 }
 
@@ -319,26 +319,26 @@ public void carregaArquivo(File arquivo) throws FileNotFoundException, IOExcepti
     c = caracter.read();
 }
 
-public Lexema getSimbolo(Lexema simbolo){
+public Token getSimbolo(Token simbolo){
       if(null != TabelaSimbolos.getSimbolo(simbolo.getLexema())){
           return TabelaSimbolos.getSimbolo(simbolo.getLexema());
       }
       return null;
 }
 
-public void addSimbolo(Lexema key){
+public void addSimbolo(Token key){
     TabelaSimbolos.addSimbolo(key);
 }
 
-public void alteraSimbolo(Lexema key){
+public void alteraSimbolo(Token key){
     TabelaSimbolos.alteraSimbolo(key);
 }
 
-public void removeSimbolo(Lexema key){
+public void removeSimbolo(Token key){
     TabelaSimbolos.removeSimbolo(key.getLexema());
 }
 
-public Lexema analisaTexto() throws FileNotFoundException, IOException{
+public Token analisaTexto() throws FileNotFoundException, IOException{
 //TabelaTransicao[estado][entrada]
     do{
 //cast para char realizado nas funções 
@@ -379,7 +379,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                            this.mapaCaracter(c) != FechaChaves  &&
                            this.mapaCaracter(c) != Ponto        &&
                            this.mapaCaracter(c) != Outro){//Tratando caracateres diferentes de " ", /n, {, EOF, outros
-                                lexemas.add(new Lexema(c));
+                                lexemas.add(new Token(c));
                                 coluna += 1;
                         }else if(this.mapaCaracter(c) != FimArquivo){ //Tratando " ", /n, {, outros
                                 
@@ -389,7 +389,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                                 
                         }else{
                             
-                                     lexemas.add(new Lexema("FIM DO ARQUIVO",tokenFim));
+                                     lexemas.add(new Token("FIM DO ARQUIVO",tokenFim));
                                      this.setLinha(linha);
                                      numeroLexemas += 1;
                             
@@ -696,7 +696,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
             switch(ultimoEstado){   //passar tratamentos de erros para dentro dessa função;
                 case 0:
                     this.mensagemErro();
-                    lexemas.add(new Lexema(c,tokenErro,linha));
+                    lexemas.add(new Token(c,tokenErro,linha));
                     coluna += 1;
                     numeroLexemas += 1;
                     c = caracter.read();
@@ -759,7 +759,7 @@ public Lexema analisaTexto() throws FileNotFoundException, IOException{
                     break;
                     
                 case 17:
-                    lexemas.add(numeroLexemas,new Lexema("COMENTARIO NAO FINALIZADO",tokenErro,0));
+                    lexemas.add(numeroLexemas,new Token("COMENTARIO NAO FINALIZADO",tokenErro,0));
                     this.setLinha(linha);
                     numeroLexemas += 1;
                     this.mensagemErro();

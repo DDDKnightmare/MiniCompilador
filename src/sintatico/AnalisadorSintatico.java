@@ -23,7 +23,7 @@ public class AnalisadorSintatico {
     
     
     
-    private void ErroSemantico(Lexema token){
+    private void ErroSemantico(Token token){
         System.out.println("Erro semântico na linha: " + token.getLinha() + "  com o lexema: " + token.getLexema() +
         "  do tipo: " + token.getStringTipo());
     }
@@ -231,7 +231,7 @@ public class AnalisadorSintatico {
         
         return -1;
     }
-    public void erro(Lexema token){
+    public void erro(Token token){
         System.out.println("Erro na linha: " + token.getLinha()+ " com o lexema: " + token.getLexema());
     }
     
@@ -250,7 +250,7 @@ public class AnalisadorSintatico {
     public void analisadorSintatico() throws IOException{
        
         pilha.push(estado);
-        Lexema token = Main.obterLexemas();
+        Token token = Main.obterLexemas();
         //System.out.println("token lido: " + token.getStringToken() + " q e " + token.getLexema() + "  do tipo " + token.getTipo() +" (" + token.getStringTipo()+")");
         //while (error == -1 || (token.getToken() != AnalisadorLexico.tokenFim && token.getLexema() != "fim") ){
         while (true){  
@@ -278,7 +278,7 @@ public class AnalisadorSintatico {
                     
                     token = Main.obterLexemas();
                     if(!token.getLexema().equals("fim") && token.getToken() == AnalisadorLexico.tokenFim && Main.getC() == -1){
-                        token = new Lexema("FIM DO ARQUIVO", AnalisadorLexico.tokenCifrao, 0, token.getLinha());
+                        token = new Token("FIM DO ARQUIVO", AnalisadorLexico.tokenCifrao, 0, token.getLinha());
                     }
                     break;
 
@@ -327,10 +327,10 @@ public class AnalisadorSintatico {
     
     }
     
-     private void regraSemantica(int numeroProducao, Lexema token){
+     private void regraSemantica(int numeroProducao, Token token){
         Atributos aux;
         Atributos aux2;
-        Lexema lex;
+        Token lex;
         String exp;
         switch (numeroProducao){
             
@@ -462,9 +462,9 @@ public class AnalisadorSintatico {
                 if(aux.getTipo() == atributos.peek().getTipo()){
                     if(aux.getStringTipo() != "literal"){
                         if(aux.getStringTipo() == "double" || atributos.peek().getStringTipo() == "double"){
-                            TabelaSimbolos.simbolos.put("T"+numVar,new Lexema("T"+numVar, atributos.peek().getToken(), AnalisadorLexico.tipoReal, "IDENTIFICADOR"));
+                            TabelaSimbolos.simbolos.put("T"+numVar,new Token("T"+numVar, atributos.peek().getToken(), AnalisadorLexico.tipoReal, "IDENTIFICADOR"));
                         }else{
-                            TabelaSimbolos.simbolos.put("T"+numVar,new Lexema("T"+numVar, atributos.peek().getToken(), AnalisadorLexico.tipoInteiro, "IDENTIFICADOR"));
+                            TabelaSimbolos.simbolos.put("T"+numVar,new Token("T"+numVar, atributos.peek().getToken(), AnalisadorLexico.tipoInteiro, "IDENTIFICADOR"));
                         }
                         espacos();
                         programaGerado += "T" + numVar + " = " + atributos.peek().getLexema() + " " + aux2.getStringTipo() + " " + aux.getLexema()+";" + System.getProperty("line.separator");
@@ -525,7 +525,7 @@ public class AnalisadorSintatico {
                 switch(aux2.getStringTipo()){
                     case "literal":
                         if(atributos.peek().getStringTipo() == "literal"){
-                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenLiteral, AnalisadorLexico.tipoInteiro, "num");
+                            lex = new Token(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenLiteral, AnalisadorLexico.tipoInteiro, "num");
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
                             espacos();
@@ -541,7 +541,7 @@ public class AnalisadorSintatico {
                     
                     case "int":
                         if(atributos.peek().getStringTipo() == "int" || atributos.peek().getStringTipo() == "double"){
-                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoInteiro, "num");
+                            lex = new Token(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoInteiro, "num");
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
                             espacos();
@@ -557,7 +557,7 @@ public class AnalisadorSintatico {
                         
                     case "double":
                         if(atributos.peek().getStringTipo() == "int" || atributos.peek().getStringTipo() == "double"){
-                            lex = new Lexema(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoInteiro, "num");
+                            lex = new Token(atributos.peek().getLexema()+ " " + aux.getLexema() + " " + aux2.getLexema(), AnalisadorLexico.tokenNumero, AnalisadorLexico.tipoInteiro, "num");
                             TabelaSimbolos.simbolos.put("T"+numVar, lex);
                             atributos.peek().setVariavel("EXP_R");
                             atributos.peek().setLexema("T"+numVar);

@@ -1,6 +1,6 @@
 
 package sintatico;
-import lexico.Lexema;
+import lexico.Token;
 /**
  *
  * @author guilhermeferreira
@@ -8,7 +8,7 @@ import lexico.Lexema;
 public class Atributos {
     
     private String variavel; // terminal ou não terminal.
-    private Lexema lexema;
+    private Token lexema;
     
     //get
     public String getVar(){
@@ -67,7 +67,7 @@ public class Atributos {
         
     }
     
-    public Atributos(String variavel, Lexema lexema){
+    public Atributos(String variavel, Token lexema){
         this.variavel = variavel;
         this.lexema = lexema;
     }

@@ -14,28 +14,28 @@ import java.util.*;
 
 public class TabelaSimbolos{
     
-    public static Hashtable<String, Lexema> simbolos = new Hashtable<String, Lexema>();
+    public static Hashtable<String, Token> simbolos = new Hashtable<String, Token>();
     
     public static void carregaPalavrasReservadas(){
-        simbolos.put("inicio", new Lexema("inicio", AnalisadorLexico.tokenInicio, AnalisadorLexico.tipoPalavraReservada));
-        simbolos.put("varinicio", new Lexema("varinicio", AnalisadorLexico.tokenVarInicio, AnalisadorLexico.tipoPalavraReservada));
-        simbolos.put("varfim", new Lexema("varfim", AnalisadorLexico.tokenVarFim, AnalisadorLexico.tipoPalavraReservada));
-        simbolos.put("escreva", new Lexema("escreva", AnalisadorLexico.tokenEscreva, AnalisadorLexico.tipoPalavraReservada));
-        simbolos.put("leia", new Lexema("leia", AnalisadorLexico.tokenLeia, AnalisadorLexico.tipoPalavraReservada));
-        simbolos.put("se", new Lexema("se", AnalisadorLexico.tokenSe, AnalisadorLexico.tipoPalavraReservada));
-        simbolos.put("entao", new Lexema("entao", AnalisadorLexico.tokenEntao, AnalisadorLexico.tipoPalavraReservada));
-        simbolos.put("fimse", new Lexema("fimse", AnalisadorLexico.tokenFimSe, AnalisadorLexico.tipoPalavraReservada));
-        simbolos.put("fim", new Lexema("fim", AnalisadorLexico.tokenFim, AnalisadorLexico.tipoPalavraReservada));
-        simbolos.put("inteiro", new Lexema("inteiro", AnalisadorLexico.palavraReservadaInteiro, AnalisadorLexico.tipoInteiro));
-        simbolos.put("real", new Lexema("real", AnalisadorLexico.palavraReservadaReal, AnalisadorLexico.tipoReal));
-        simbolos.put("literal", new Lexema("literal", AnalisadorLexico.palavraReservadaLiteral, AnalisadorLexico.tipoLiteral));
+        simbolos.put("inicio", new Token("inicio", AnalisadorLexico.tokenInicio, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("varinicio", new Token("varinicio", AnalisadorLexico.tokenVarInicio, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("varfim", new Token("varfim", AnalisadorLexico.tokenVarFim, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("escreva", new Token("escreva", AnalisadorLexico.tokenEscreva, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("leia", new Token("leia", AnalisadorLexico.tokenLeia, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("se", new Token("se", AnalisadorLexico.tokenSe, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("entao", new Token("entao", AnalisadorLexico.tokenEntao, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("fimse", new Token("fimse", AnalisadorLexico.tokenFimSe, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("fim", new Token("fim", AnalisadorLexico.tokenFim, AnalisadorLexico.tipoPalavraReservada));
+        simbolos.put("inteiro", new Token("inteiro", AnalisadorLexico.palavraReservadaInteiro, AnalisadorLexico.tipoInteiro));
+        simbolos.put("real", new Token("real", AnalisadorLexico.palavraReservadaReal, AnalisadorLexico.tipoReal));
+        simbolos.put("literal", new Token("literal", AnalisadorLexico.palavraReservadaLiteral, AnalisadorLexico.tipoLiteral));
     }
     
-    public static Lexema getSimbolo(String key){
+    public static Token getSimbolo(String key){
      return simbolos.get(key);
     }
     
-    public static boolean hasSimbolo(Lexema key){
+    public static boolean hasSimbolo(Token key){
         
         if(simbolos.containsKey(key.getLexema())){
                 return true;
@@ -44,7 +44,7 @@ public class TabelaSimbolos{
         }
     }
     
-    public static void alteraSimbolo(Lexema key){
+    public static void alteraSimbolo(Token key){
         simbolos.remove(key.getLexema());
         simbolos.put(key.getLexema(), key);
     }
@@ -57,7 +57,7 @@ public class TabelaSimbolos{
         simbolos.remove(simbolo);
     }
     
-    public static void addSimbolo(Lexema simbolo){
+    public static void addSimbolo(Token simbolo){
         simbolos.put(simbolo.getLexema(), simbolo);
     }
     
