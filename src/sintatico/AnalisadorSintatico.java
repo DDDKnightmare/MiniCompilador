@@ -459,7 +459,11 @@ public class AnalisadorSintatico {
                 aux2 = atributos.pop(); // opm
                 if(aux.getTipo() == atributos.peek().getTipo()){
                     if(aux.getStringTipo() != "literal"){
-                        TabelaSimbolos.simbolos.put("T"+numVar,new Lexema("T"+numVar, atributos.peek().getToken(), atributos.peek().getTipo(), "IDENTIFICADOR"));
+                        if(aux.getStringTipo() == "double" || atributos.peek().getStringTipo() == "double"){
+                            TabelaSimbolos.simbolos.put("T"+numVar,new Lexema("T"+numVar, atributos.peek().getToken(), AnalisadorLexico.tipoReal, "IDENTIFICADOR"));
+                        }else{
+                            TabelaSimbolos.simbolos.put("T"+numVar,new Lexema("T"+numVar, atributos.peek().getToken(), AnalisadorLexico.tipoInteiro, "IDENTIFICADOR"));
+                        }
                         espacos();
                         programaGerado += "T" + numVar + " = " + atributos.peek().getLexema() + " " + aux2.getStringTipo() + " " + aux.getLexema()+";" + System.getProperty("line.separator");
                         atributos.peek().setVariavel("LD");
