@@ -370,6 +370,7 @@ public class AnalisadorSintatico {
                 aux = atributos.pop();     // id
                 if(!idDeclarado(aux.getLexema())){
                     System.out.println("Erro: Variável não declarada");
+                    System.out.println("Erro ocorreu na linha: " + aux.getLinha()+ " com o lexema: " + aux.getLexema());
                     System.exit(0);
                 }
                 espacos();
@@ -432,6 +433,7 @@ public class AnalisadorSintatico {
                     
                 }else{ 
                     System.out.println("Erro: Variável não declarada!");
+                    System.out.println("Erro ocorreu na linha: " + aux.getLinha()+ " com o lexema: " + aux.getLexema());
                     System.exit(0);
                 }
                 break;
@@ -442,6 +444,7 @@ public class AnalisadorSintatico {
                 aux = atributos.pop(); // rcb
                 if(!idDeclarado(atributos.peek().getLexema())){
                     System.out.println("Erro: Variável não declarada!");
+                    System.out.println("Erro ocorreu na linha: " + atributos.peek().getLinha()+ " com o lexema: " + atributos.peek().getLexema());
                     System.exit(0);
                 }
                 if(atributos.peek().getTipo() == aux2.getTipo()){
@@ -451,6 +454,7 @@ public class AnalisadorSintatico {
                     
                 }else{
                     System.out.println("Erro: Operandos com tipos incompatíveis!");
+                    System.out.println("Erro ocorreu na linha: " + aux2.getLinha()+ " com o lexema: " + aux2.getLexema());
                     System.exit(0);
                 }
                 
@@ -474,12 +478,14 @@ public class AnalisadorSintatico {
                         numVar++;
                     }else{
                         System.out.println("Erro: Operandos com tipos incompatíveis!");
+                        System.out.println("Erro ocorreu na linha: " + aux.getLinha()+ " com o lexema: " + aux.getLexema());
                         System.exit(0);
                     }
                     
                     
                 }else{
                     System.out.println("Erro: Operandos com tipos incompatíveis!");
+                    System.out.println("Erro ocorreu na linha: " + aux.getLinha()+ " com o lexema: " + aux.getLexema());
                     System.exit(0);
                 }
                
@@ -494,6 +500,7 @@ public class AnalisadorSintatico {
                     atributos.peek().setVariavel("OPRD");
                 }else{
                     System.out.println("Erro: Variável nao declarada!");
+                    
                     ErroSemantico(token);
                 }
                 break;
@@ -535,6 +542,7 @@ public class AnalisadorSintatico {
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
+                            System.out.println("Erro ocorreu na linha: " + aux2.getLinha()+ " com o lexema: " + aux2.getLexema());
                             System.exit(0);
                         }
                         break;
@@ -551,6 +559,7 @@ public class AnalisadorSintatico {
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
+                            System.out.println("Erro ocorreu na linha: " + aux2.getLinha()+ " com o lexema: " + aux2.getLexema());
                             System.exit(0);
                         }
                         break;
@@ -565,6 +574,7 @@ public class AnalisadorSintatico {
                             numVar++;
                         }else{
                             System.out.println("Erro: Tipos incompatíveis!");
+                            System.out.println("Erro ocorreu na linha: " + aux2.getLinha()+ " com o lexema: " + aux2.getLexema());
                             System.exit(0);
                         }
                         break;
